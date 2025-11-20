@@ -16,7 +16,7 @@ export function OpenInV0Button({
     >
       <a
         href={`https://v0.dev/chat/api/open?url=${
-          process.env.NEXT_PUBLIC_BASE_URL || "https://blocks.so"
+          process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
         }/r/${name}.json`}
         target="_blank"
         rel="noreferrer"

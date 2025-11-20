@@ -4,7 +4,7 @@
   "type": "registry:block",
   "title": "Form Sections with Side Labels",
   "description": "A form sections with side labels block.",
-  "author": "ephraim duncan <https://ephraimduncan.com>",
+  "author": "Asad Chaudhary <https://github.com/asadchaudhary79>",
   "registryDependencies": [
     "button",
     "input",

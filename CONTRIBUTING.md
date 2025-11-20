@@ -16,8 +16,8 @@ We welcome contributions to our project! This guide will help you get started wi
 2. Clone your forked repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/blocks.git
-   cd blocks
+   git clone https://github.com/your-username/BloksElements.git
+   cd BloksElements
    ```
 
 3. Install dependencies:
@@ -47,7 +47,7 @@ bun run generate:registry    # Generate registry.json
 bun run generate:markdown    # Generate MDX documentation
 bun run validate:registry    # Validate registry structure
 
-# Code Quality  
+# Code Quality
 bunx ultracite lint         # Lint codebase with Biome
 ```
 
@@ -73,7 +73,7 @@ blocks/
 
 1. **Create the component** in `content/components/{category}/{block-id}.tsx`
 2. **Register metadata** in `content/blocks-metadata.ts`
-3. **Map the component** in `content/blocks-components.tsx` 
+3. **Map the component** in `content/blocks-components.tsx`
 4. **Export from category** in `content/components/{category}/index.ts`
 5. **Generate registry** with `bun run generate:registry`
 

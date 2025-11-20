@@ -13,6 +13,7 @@ import {
 import { useCopyToClipboard } from "@/hooks/use-copy";
 import { cn } from "@/lib/utils";
 import { CheckIcon, CopyIcon } from "lucide-react";
+import { IconSettings, IconCode } from "@tabler/icons-react";
 import * as React from "react";
 
 export function RegistrySetup({
@@ -26,46 +27,23 @@ export function RegistrySetup({
         <Button
           variant="ghost"
           size="default"
-          className={cn(className, "rounded-full")}
+          className={cn(className, "rounded-full group gap-2")}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 256 256"
-            className="size-4"
-          >
-            <rect width="256" height="256" fill="none"></rect>
-            <line
-              x1="208"
-              y1="128"
-              x2="128"
-              y2="208"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="32"
-            ></line>
-            <line
-              x1="192"
-              y1="40"
-              x2="40"
-              y2="192"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="32"
-            ></line>
-          </svg>
-          Registry
+          <div className="relative">
+            <div className="absolute inset-0 rounded-md bg-linear-to-br from-emerald-500 to-emerald-600 opacity-0 group-hover:opacity-20 blur-sm transition-opacity" />
+            <div className="relative size-5 rounded-md bg-linear-to-br from-emerald-500/10 to-emerald-600/10 flex items-center justify-center group-hover:from-emerald-500/20 group-hover:to-emerald-600/20 transition-all">
+              <IconCode className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+          </div>
+          <span className="hidden sm:inline">Registry</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="md:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Setup Registry</DialogTitle>
           <DialogDescription>
-            Use the code below to configure the @blocks registry for your
-            project.
+            Use the code below to configure the @blockselements registry for
+            your project.
           </DialogDescription>
         </DialogHeader>
         <div className="font-medium">
@@ -92,7 +70,7 @@ export function RegistrySetup({
         </div>
         <div className="overflow-x-auto bg-muted p-8 rounded-md min-h-[50px]">
           <pre className="text-sm font-mono">
-            <code>npx shadcn@latest add @blocks/[component-name]</code>
+            <code>npx shadcn@latest add @blockselements/[component-name]</code>
           </pre>
         </div>
         <div className="font-medium">
@@ -109,6 +87,6 @@ export function RegistrySetup({
 }
 
 const registrySetupCode = `"registries": {
-  "@blocks": "https://blocks.so/r/{name}.json"
+  "@blockselements": "https://blockselements.co/r/{name}.json"
 }
 `;

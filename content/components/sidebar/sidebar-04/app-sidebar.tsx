@@ -29,8 +29,8 @@ import { NavUser } from "./nav-user";
 // This is sample data
 const data = {
   user: {
-    name: "ephraim",
-    email: "ephraim@blocks.so",
+    name: "asad",
+    email: "asad@blockselements.co",
     avatar: "/avatar-01.png",
   },
   navMain: [

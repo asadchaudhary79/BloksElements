@@ -20,10 +20,10 @@ const fontMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  applicationName: "blocks.so",
+  applicationName: "blockselements.co",
   title: {
     default: "Shadcn Blocks - 60+ Free shadcn/ui Components for React",
-    template: "%s | blocks.so - shadcn/ui blocks",
+    template: "%s | blockselements.co - shadcn/ui blocks",
   },
   description: siteConfig.description,
   keywords: [
@@ -50,11 +50,11 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "Ephraim Duncan",
-      url: "https://ephraimduncan.com",
+      name: "Asad Chaudhary",
+      url: "https://github.com/asadchaudhary79",
     },
   ],
-  creator: "Ephraim Duncan",
+  creator: "Asad Chaudhary",
   alternates: {
     canonical: "/",
   },
@@ -75,23 +75,15 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     title: "Shadcn Blocks - 60+ Free shadcn/ui Components for React",
     description: siteConfig.description,
-    siteName: "blocks.so",
+    siteName: "blockselements.co",
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "blocks.so - Free shadcn/ui blocks and components",
+        alt: "blockselements.co - Free shadcn/ui blocks and components",
       },
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Shadcn Blocks - 60+ Free shadcn/ui Components for React",
-    description: siteConfig.description,
-    creator: "@ephraimduncan_",
-    site: "@ephraimduncan_",
-    images: [siteConfig.ogImage],
   },
   icons: {
     icon: "/favicon.ico",
@@ -108,20 +100,35 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(fontSans.variable, fontMono.variable, "antialiased")}
+        className={cn(
+          fontSans.variable,
+          fontMono.variable,
+          "antialiased min-h-screen w-full relative bg-background dark:bg-black"
+        )}
         suppressHydrationWarning
       >
+        {/* Emerald Depths Background with Top Glow - Only in Dark Mode */}
+        <div
+          className="fixed inset-0 z-0 pointer-events-none hidden dark:block"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(16, 185, 129, 0.25), transparent 70%), #000000",
+          }}
+        />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           disableTransitionOnChange
           enableSystem
         >
-          {children}
+          <div className="relative z-10">
+            {children}
 
-          <TailwindIndicator />
-          <Toaster />
-          <SeoJsonLd />
+            <TailwindIndicator />
+            <Toaster />
+            <SeoJsonLd />
+          </div>
         </ThemeProvider>
       </body>
     </html>

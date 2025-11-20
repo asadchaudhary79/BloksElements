@@ -54,24 +54,16 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
       title: `${categoryName} Shadcn Blocks - ${blockCount} Free shadcn/ui Components`,
       description: `Free shadcn/ui ${categoryName.toLowerCase()} blocks and components built with React, Tailwind CSS, and Next.js. Copy and paste ${blockCount} beautifully designed, accessible ${categoryName.toLowerCase()} UI blocks.`,
       url: `${siteConfig.url}/${params.blocksCategory}`,
-      siteName: "blocks.so",
+      siteName: "blockselements.co",
       type: "website",
       images: [
         {
           url: siteConfig.ogImage,
           width: 1200,
           height: 630,
-          alt: `${categoryName} shadcn/ui blocks - blocks.so`,
+          alt: `${categoryName} shadcn/ui blocks - blockselements.co`,
         },
       ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${categoryName} Shadcn Blocks - ${blockCount} Free Components`,
-      description: `Free shadcn/ui ${categoryName.toLowerCase()} blocks built with React, Tailwind CSS, and Next.js. Copy and paste ${blockCount} accessible UI blocks.`,
-      creator: "@ephraimduncan_",
-      site: "@ephraimduncan_",
-      images: [siteConfig.ogImage],
     },
   };
 }

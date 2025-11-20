@@ -46,7 +46,7 @@ function ThemeSwitcher({
   return (
     <div
       className={cn(
-        "relative isolate inline-flex h-8 items-center rounded-full border border-dotted px-1",
+        "relative isolate inline-flex h-8 items-center rounded-full border border-dotted px-1 ",
         className
       )}
       {...props}
@@ -57,7 +57,7 @@ function ThemeSwitcher({
         return (
           <button
             aria-label={`Switch to ${label}`}
-            className="group relative size-6 rounded-full transition duration-200 ease-out"
+            className="group relative size-6 rounded-full transition duration-200 ease-out cursor-pointer"
             key={type}
             onClick={() => setTheme(type)}
             title={`Switch to ${label}`}

@@ -452,13 +452,13 @@ export function AppSidebar() {
               <SidebarMenuButton className="w-full h-12 px-3">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <Avatar className="h-8 w-8 rounded-full">
-                    <AvatarImage src="/avatar-01.png" alt="ephraim" />
+                    <AvatarImage src="/avatar-01.png" alt="asad" />
                     <AvatarFallback className="rounded-full">E</AvatarFallback>
                   </Avatar>
                   <div className="flex-1 text-left min-w-0">
-                    <div className="text-sm font-medium truncate">ephraim</div>
+                    <div className="text-sm font-medium truncate">asad</div>
                     <div className="text-xs text-muted-foreground truncate">
-                      ephraim@blocks.so
+                      asad@blockselements.co
                     </div>
                   </div>
                 </div>

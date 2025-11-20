@@ -73,7 +73,7 @@ export default function Login05() {
                   id="email-login-05"
                   name="email-login-05"
                   autoComplete="email-login-05"
-                  placeholder="ephraim@blocks.so"
+                  placeholder="asad@blockselements.co"
                   className="mt-2"
                 />
               </div>

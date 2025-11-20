@@ -21,13 +21,18 @@ import {
   IconSparkles,
   IconWaveSine,
 } from "@tabler/icons-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Ai01() {
   const [message, setMessage] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,49 +123,62 @@ export default function Ai01() {
             className={cn("flex", { hidden: isExpanded })}
             style={{ gridArea: "leading" }}
           >
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 rounded-full hover:bg-accent outline-none ring-0"
-                >
-                  <IconPlus className="size-6 text-muted-foreground" />
-                </Button>
-              </DropdownMenuTrigger>
+            {isClient ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 rounded-full hover:bg-accent outline-none ring-0"
+                  >
+                    <IconPlus className="size-6 text-muted-foreground" />
+                  </Button>
+                </DropdownMenuTrigger>
 
-              <DropdownMenuContent
-                align="start"
-                className="max-w-xs rounded-2xl p-1.5"
+                <DropdownMenuContent
+                  align="start"
+                  className="max-w-xs rounded-2xl p-1.5"
+                >
+                  <DropdownMenuGroup className="space-y-1">
+                    <DropdownMenuItem
+                      className="rounded-[calc(1rem-6px)]"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <IconPaperclip size={20} className="opacity-60" />
+                      Add photos & files
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="rounded-[calc(1rem-6px)]"
+                      onClick={() => {}}
+                    >
+                      <div className="flex items-center gap-2">
+                        <IconSparkles size={20} className="opacity-60" />
+                        Agent mode
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="rounded-[calc(1rem-6px)]"
+                      onClick={() => {}}
+                    >
+                      <IconSearch size={20} className="opacity-60" />
+                      Deep Research
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 rounded-full hover:bg-accent outline-none ring-0"
+                disabled
+                aria-hidden
               >
-                <DropdownMenuGroup className="space-y-1">
-                  <DropdownMenuItem
-                    className="rounded-[calc(1rem-6px)]"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <IconPaperclip size={20} className="opacity-60" />
-                    Add photos & files
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="rounded-[calc(1rem-6px)]"
-                    onClick={() => {}}
-                  >
-                    <div className="flex items-center gap-2">
-                      <IconSparkles size={20} className="opacity-60" />
-                      Agent mode
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="rounded-[calc(1rem-6px)]"
-                    onClick={() => {}}
-                  >
-                    <IconSearch size={20} className="opacity-60" />
-                    Deep Research
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <IconPlus className="size-6 text-muted-foreground" />
+              </Button>
+            )}
           </div>
 
           <div

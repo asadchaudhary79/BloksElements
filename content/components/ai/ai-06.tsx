@@ -1,0 +1,486 @@
+"use client";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import {
+  IconArrowUp,
+  IconCheck,
+  IconDotsVertical,
+  IconMoodSmile,
+  IconPaperclip,
+  IconPalette,
+  IconRobot,
+  IconSearch,
+  IconSparkles,
+  IconWand,
+} from "@tabler/icons-react";
+import { useRef, useState } from "react";
+
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: Date;
+  persona?: {
+    title: string;
+    summary: string;
+    palette: string[];
+    traits: string[];
+    deliverables: string[];
+  };
+}
+
+const PERSONAS = [
+  {
+    id: "product",
+    title: "Product Designer",
+    summary: "Calm, purposeful, and highly systematic language.",
+    palette: ["#0f172a", "#1d4ed8", "#f8fafc"],
+    traits: ["Wireframes", "Design tokens", "Case studies"],
+    deliverables: [
+      "UX narrative with success metrics",
+      "Responsive grid recommendation",
+      "Token-ready color palette",
+    ],
+  },
+  {
+    id: "story",
+    title: "Brand Storyteller",
+    summary: "Expressive tone with editorial flair and motion cues.",
+    palette: ["#1e1b4b", "#f97316", "#fef3c7"],
+    traits: ["Campaigns", "Art direction", "Motion cues"],
+    deliverables: [
+      "Launch story outline",
+      "Hero animation choreography",
+      "Three bold typographic moments",
+    ],
+  },
+  {
+    id: "lab",
+    title: "Experimental Lab",
+    summary: "Playful instructions and layered micro-interactions.",
+    palette: ["#082f49", "#7c3aed", "#a5f3fc"],
+    traits: ["Micro copy", "3D feel", "Immersive UI"],
+    deliverables: [
+      "Interaction storyboard",
+      "Spatial layering recipe",
+      "Tone of voice moodboard",
+    ],
+  },
+];
+
+const SAMPLE_MESSAGES: Message[] = [
+  {
+    id: "1",
+    role: "assistant",
+    content:
+      "Welcome to AI Persona Direction Studio! I can help you craft creative direction by switching between different AI personalities. Which persona would you like to explore?",
+    timestamp: new Date(Date.now() - 3600000),
+  },
+];
+
+const PERSONA_SUGGESTIONS = [
+  { text: "Product Designer", prompt: "Show me Product Designer persona" },
+  { text: "Brand Storyteller", prompt: "I need Brand Storyteller direction" },
+  { text: "Experimental Lab", prompt: "Explore Experimental Lab persona" },
+];
+
+export default function Ai06() {
+  const [messages, setMessages] = useState<Message[]>(SAMPLE_MESSAGES);
+  const [input, setInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedPersona, setSelectedPersona] = useState(PERSONAS[0]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const filteredMessages = messages.filter(
+    (msg) =>
+      !searchQuery ||
+      msg.content.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: input.trim(),
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+    const userInput = input.trim().toLowerCase();
+    setInput("");
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+
+    // Detect persona from input
+    let persona = selectedPersona;
+    if (userInput.includes("product designer")) {
+      persona = PERSONAS[0];
+      setSelectedPersona(PERSONAS[0]);
+    } else if (userInput.includes("brand storyteller")) {
+      persona = PERSONAS[1];
+      setSelectedPersona(PERSONAS[1]);
+    } else if (userInput.includes("experimental lab")) {
+      persona = PERSONAS[2];
+      setSelectedPersona(PERSONAS[2]);
+    }
+
+    // Simulate AI response with persona details
+    setTimeout(() => {
+      const aiResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: `Here's the creative direction for ${persona.title}:`,
+        timestamp: new Date(),
+        persona: persona,
+      };
+      setMessages((prev) => [...prev, aiResponse]);
+    }, 1500);
+  };
+
+  const handleSuggestionClick = (prompt: string) => {
+    setInput(prompt);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  };
+
+  const handlePersonaClick = (persona: (typeof PERSONAS)[number]) => {
+    setSelectedPersona(persona);
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: `Show me ${persona.title} persona`,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, newMessage]);
+
+    setTimeout(() => {
+      const aiResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: `Here's the creative direction for ${persona.title}:`,
+        timestamp: new Date(),
+        persona: persona,
+      };
+      setMessages((prev) => [...prev, aiResponse]);
+    }, 1000);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as any);
+    }
+  };
+
+  return (
+    <div className="mx-auto flex h-[720px] w-full max-w-6xl gap-4 overflow-hidden">
+      {/* Sidebar */}
+      <div className="hidden w-64 shrink-0 flex-col gap-4 rounded-2xl border border-border bg-card p-4 md:flex">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
+            <IconSparkles className="h-4 w-4 text-primary" />
+            Persona Studio
+          </div>
+          <h3 className="text-lg font-semibold text-foreground">
+            Select Persona
+          </h3>
+          <p className="text-xs text-muted-foreground">
+            Switch between AI personalities
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          {PERSONAS.map((persona) => (
+            <button
+              key={persona.id}
+              type="button"
+              onClick={() => handlePersonaClick(persona)}
+              className={cn(
+                "flex w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left transition hover:border-primary/60 hover:bg-primary/5",
+                selectedPersona.id === persona.id
+                  ? "border-primary bg-primary/5"
+                  : "border-transparent bg-transparent"
+              )}
+            >
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
+                <IconMoodSmile className="h-4 w-4 text-muted-foreground" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-sm font-semibold text-foreground">
+                  {persona.title}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {persona.summary}
+                </p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Chat Panel */}
+      <div className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-border px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+              <IconSparkles className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">
+                Persona Direction Studio
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Craft creative direction
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <IconSearch className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search messages..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-8 w-48 pl-8 text-xs"
+              />
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <IconDotsVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Clear chat</DropdownMenuItem>
+                <DropdownMenuItem>Export direction</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+
+        {/* Messages Area */}
+        <ScrollArea className="flex-1 min-h-0">
+          <div className="flex h-full flex-col gap-4 px-4 py-4">
+            {filteredMessages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <IconSearch className="mb-4 h-12 w-12 text-muted-foreground/50" />
+                <p className="text-sm text-muted-foreground">
+                  No messages found matching "{searchQuery}"
+                </p>
+              </div>
+            ) : (
+              filteredMessages.map((message) => (
+                <div
+                  key={message.id}
+                  className={cn(
+                    "flex gap-3",
+                    message.role === "user" ? "justify-end" : "justify-start"
+                  )}
+                >
+                  {message.role === "assistant" && (
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="bg-primary/10 text-primary">
+                        <IconSparkles className="h-4 w-4" />
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+
+                  <div className="flex max-w-[80%] flex-col gap-2">
+                    <div
+                      className={cn(
+                        "flex flex-col gap-1 rounded-2xl px-4 py-2.5",
+                        message.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-foreground"
+                      )}
+                    >
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {message.content}
+                      </p>
+                      <span className="text-xs opacity-70">
+                        {message.timestamp.toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+
+                    {message.persona && (
+                      <div className="rounded-2xl border border-border bg-background p-4 shadow-sm">
+                        <div className="mb-4 flex items-start justify-between">
+                          <div>
+                            <Badge
+                              className="mb-2 rounded-full"
+                              variant="secondary"
+                            >
+                              Persona Blueprint
+                            </Badge>
+                            <h4 className="text-lg font-semibold text-foreground">
+                              {message.persona.title}
+                            </h4>
+                            <p className="text-sm text-muted-foreground">
+                              {message.persona.summary}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1 rounded-xl border border-border px-2 py-1.5">
+                            {message.persona.palette.map((color) => (
+                              <span
+                                key={color}
+                                className="h-5 w-5 rounded-lg border border-black/10"
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="grid gap-3 md:grid-cols-2">
+                          <div className="rounded-xl border border-border/80 bg-muted/40 p-3">
+                            <p className="mb-2 text-xs uppercase text-muted-foreground">
+                              Personality Traits
+                            </p>
+                            <ul className="space-y-1.5 text-sm text-foreground">
+                              {message.persona.traits.map((trait) => (
+                                <li
+                                  key={trait}
+                                  className="flex items-center gap-2 rounded-lg bg-background/70 px-2 py-1"
+                                >
+                                  <IconPalette className="h-3.5 w-3.5 text-primary" />
+                                  {trait}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="rounded-xl border border-border/80 bg-muted/20 p-3">
+                            <p className="mb-2 text-xs uppercase text-muted-foreground">
+                              Deliverables
+                            </p>
+                            <ul className="space-y-1.5 text-sm text-foreground">
+                              {message.persona.deliverables.map((item) => (
+                                <li key={item} className="flex gap-2">
+                                  <IconCheck className="mt-0.5 h-3.5 w-3.5 text-primary" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <Button
+                              className="mt-3 w-full rounded-full"
+                              size="sm"
+                              variant="secondary"
+                            >
+                              Generate brief
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {message.role === "user" && (
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="bg-muted">U</AvatarFallback>
+                    </Avatar>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+        </ScrollArea>
+
+        {/* Suggestions */}
+        {input.length === 0 && (
+          <div className="border-t border-border px-4 py-3">
+            <p className="mb-2 text-xs text-muted-foreground">
+              Quick persona suggestions:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {PERSONA_SUGGESTIONS.map((suggestion) => (
+                <Button
+                  key={suggestion.text}
+                  variant="outline"
+                  size="sm"
+                  className="h-7 rounded-full text-xs"
+                  onClick={() => handleSuggestionClick(suggestion.prompt)}
+                >
+                  {suggestion.text}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Input Area */}
+        <div className="border-t border-border p-4">
+          <form onSubmit={handleSubmit} className="flex gap-2">
+            <div className="relative flex-1">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute left-2 top-1/2 h-6 w-6 -translate-y-1/2"
+              >
+                <IconPaperclip className="h-4 w-4 text-muted-foreground" />
+              </Button>
+              <Textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask about a persona or creative direction..."
+                className="min-h-[44px] max-h-32 resize-none rounded-xl border-border bg-background pl-10 pr-20 text-sm"
+                rows={1}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = "auto";
+                  target.style.height = `${Math.min(
+                    target.scrollHeight,
+                    128
+                  )}px`;
+                }}
+              />
+              <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-1">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                >
+                  <IconWand className="h-4 w-4 text-muted-foreground" />
+                </Button>
+                <Button
+                  type="submit"
+                  size="icon"
+                  className="h-7 w-7 rounded-lg"
+                  disabled={!input.trim()}
+                >
+                  <IconArrowUp className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

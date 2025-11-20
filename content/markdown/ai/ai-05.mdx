@@ -1,0 +1,356 @@
+```tsx
+"use client";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import {
+  IconArrowUp,
+  IconDotsVertical,
+  IconPaperclip,
+  IconRobot,
+  IconSearch,
+  IconSparkles,
+  IconWand,
+} from "@tabler/icons-react";
+import { useRef, useState } from "react";
+
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: Date;
+  moodboard?: {
+    title: string;
+    category: string;
+    preview: string;
+    tags: string[];
+    ratio: string;
+  };
+}
+
+const SAMPLE_MESSAGES: Message[] = [
+  {
+    id: "1",
+    role: "assistant",
+    content:
+      "Hello! I'm your AI Style Lab assistant. I can help you generate moodboards, design palettes, and creative direction. What style are you looking for?",
+    timestamp: new Date(Date.now() - 3600000),
+  },
+  {
+    id: "2",
+    role: "user",
+    content: "I need a minimal design moodboard for a dashboard",
+    timestamp: new Date(Date.now() - 3300000),
+  },
+  {
+    id: "3",
+    role: "assistant",
+    content:
+      "Here are some minimal dashboard moodboards I've generated for you:",
+    timestamp: new Date(Date.now() - 3000000),
+    moodboard: {
+      title: "Monochrome Workspace",
+      category: "Dashboard",
+      preview:
+        "linear-gradient(135deg, rgba(15,23,42,1) 0%, rgba(30,41,59,1) 100%)",
+      tags: ["Glassmorphism", "Grid"],
+      ratio: "16:9",
+    },
+  },
+];
+
+const STYLE_SUGGESTIONS = [
+  { text: "Minimal design", prompt: "Generate minimal design moodboards" },
+  { text: "Editorial style", prompt: "Show me editorial style inspirations" },
+  { text: "Vibrant colors", prompt: "Create vibrant color palettes" },
+];
+
+export default function Ai05() {
+  const [messages, setMessages] = useState<Message[]>(SAMPLE_MESSAGES);
+  const [input, setInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const filteredMessages = messages.filter(
+    (msg) =>
+      !searchQuery ||
+      msg.content.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: input.trim(),
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+    setInput("");
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+
+    // Simulate AI response with moodboard
+    setTimeout(() => {
+      const aiResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content:
+          "I've generated some design options based on your request. Here's what I created:",
+        timestamp: new Date(),
+        moodboard: {
+          title: "Creative Workspace",
+          category: "Dashboard",
+          preview:
+            "linear-gradient(140deg, rgba(14,165,233,1) 0%, rgba(248,113,113,1) 100%)",
+          tags: ["Modern", "Clean"],
+          ratio: "16:9",
+        },
+      };
+      setMessages((prev) => [...prev, aiResponse]);
+    }, 1500);
+  };
+
+  const handleSuggestionClick = (prompt: string) => {
+    setInput(prompt);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as any);
+    }
+  };
+
+  return (
+    <div className="mx-auto flex h-[620px] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-border px-4 py-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+            <IconSparkles className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">AI Style Lab</h3>
+            <p className="text-xs text-muted-foreground">
+              Generate moodboards in seconds
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <IconSearch className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search messages..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-8 w-48 pl-8 text-xs"
+            />
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <IconDotsVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Clear chat</DropdownMenuItem>
+              <DropdownMenuItem>Export moodboards</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+
+      {/* Messages Area */}
+      <ScrollArea className="flex-1 min-h-0">
+        <div className="flex h-full flex-col gap-4 px-4 py-4">
+          {filteredMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <IconSearch className="mb-4 h-12 w-12 text-muted-foreground/50" />
+              <p className="text-sm text-muted-foreground">
+                No messages found matching "{searchQuery}"
+              </p>
+            </div>
+          ) : (
+            filteredMessages.map((message) => (
+              <div
+                key={message.id}
+                className={cn(
+                  "flex gap-3",
+                  message.role === "user" ? "justify-end" : "justify-start"
+                )}
+              >
+                {message.role === "assistant" && (
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-primary/10 text-primary">
+                      <IconSparkles className="h-4 w-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                )}
+
+                <div className="flex max-w-[75%] flex-col gap-2">
+                  <div
+                    className={cn(
+                      "flex flex-col gap-1 rounded-2xl px-4 py-2.5",
+                      message.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-foreground"
+                    )}
+                  >
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {message.content}
+                    </p>
+                    <span className="text-xs opacity-70">
+                      {message.timestamp.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  </div>
+
+                  {message.moodboard && (
+                    <div className="rounded-2xl border border-border bg-background p-4 shadow-sm">
+                      <div className="flex items-baseline justify-between mb-3">
+                        <Badge variant="secondary" className="rounded-full">
+                          {message.moodboard.category}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          {message.moodboard.ratio}
+                        </span>
+                      </div>
+                      <div
+                        className="mb-3 rounded-xl border border-border/40 bg-muted/20 shadow-inner"
+                        style={{
+                          background: message.moodboard.preview,
+                          aspectRatio: "16 / 9",
+                        }}
+                      />
+                      <h4 className="mb-2 font-semibold text-foreground">
+                        {message.moodboard.title}
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {message.moodboard.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full bg-muted/60 px-2 py-1 text-xs text-muted-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <Button
+                        variant="outline"
+                        className="mt-3 w-full rounded-full"
+                        size="sm"
+                      >
+                        Use this moodboard
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
+                {message.role === "user" && (
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-muted">U</AvatarFallback>
+                  </Avatar>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </ScrollArea>
+
+      {/* Suggestions */}
+      {input.length === 0 && (
+        <div className="border-t border-border px-4 py-3">
+          <p className="mb-2 text-xs text-muted-foreground">
+            Quick suggestions:
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {STYLE_SUGGESTIONS.map((suggestion) => (
+              <Button
+                key={suggestion.text}
+                variant="outline"
+                size="sm"
+                className="h-7 rounded-full text-xs"
+                onClick={() => handleSuggestionClick(suggestion.prompt)}
+              >
+                {suggestion.text}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Input Area */}
+      <div className="border-t border-border p-4">
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <div className="relative flex-1">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute left-2 top-1/2 h-6 w-6 -translate-y-1/2"
+            >
+              <IconPaperclip className="h-4 w-4 text-muted-foreground" />
+            </Button>
+            <Textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Describe the style you want..."
+              className="min-h-[44px] max-h-32 resize-none rounded-xl border-border bg-background pl-10 pr-20 text-sm"
+              rows={1}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = "auto";
+                target.style.height = `${Math.min(target.scrollHeight, 128)}px`;
+              }}
+            />
+            <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-1">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+              >
+                <IconWand className="h-4 w-4 text-muted-foreground" />
+              </Button>
+              <Button
+                type="submit"
+                size="icon"
+                className="h-7 w-7 rounded-lg"
+                disabled={!input.trim()}
+              >
+                <IconArrowUp className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+```

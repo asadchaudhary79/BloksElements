@@ -44,7 +44,7 @@ export default function Dialog08() {
               id="email"
               name="email"
               type="email"
-              placeholder="ephraim@blocks.so"
+              placeholder="asad@blockselements.co"
               className="mt-2"
               disabled
             />
