@@ -154,7 +154,7 @@ export function PatternPreview({
                   <div className="mx-auto max-w-3xl text-center">
                     <h1 className={`text-4xl font-bold tracking-tight ${textColor} sm:text-6xl`}>
                       Build beautiful interfaces
-                      <span className={`block ${isLight ? "text-emerald-600" : "text-emerald-400"} mt-2`}>
+                      <span className={`block ${textColor} mt-2`}>
                         faster than ever
                       </span>
                     </h1>
