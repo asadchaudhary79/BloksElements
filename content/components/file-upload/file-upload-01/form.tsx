@@ -37,7 +37,7 @@ export function Form() {
                 <SelectItem value="1">
                   <img
                     className="size-5 rounded"
-                    src="https://blockselements.co/avatar-01.png"
+                    src="https://bloks-elements.vercel.app/avatar-01.png"
                     alt="Asad Chaudhary"
                     width={20}
                     height={20}
@@ -47,7 +47,7 @@ export function Form() {
                 <SelectItem value="2">
                   <img
                     className="size-5 rounded"
-                    src="https://blockselements.co/avatar-03.png"
+                    src="https://bloks-elements.vercel.app/avatar-03.png"
                     alt="Lucas Smith"
                     width={20}
                     height={20}
@@ -57,7 +57,7 @@ export function Form() {
                 <SelectItem value="3">
                   <img
                     className="size-5 rounded"
-                    src="https://blockselements.co/avatar-02.jpg"
+                    src="https://bloks-elements.vercel.app/avatar-02.jpg"
                     alt="Timur Ercan"
                     width={20}
                     height={20}

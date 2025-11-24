@@ -47,21 +47,21 @@ export default function Card02() {
           <div className="flex -space-x-2">
             <Avatar className="h-8 w-8 border-2 border-background">
               <AvatarImage
-                src="https://blockselements.co/avatar-01.png"
+                src="https://bloks-elements.vercel.app/avatar-01.png"
                 alt="User 1"
               />
               <AvatarFallback>AC</AvatarFallback>
             </Avatar>
             <Avatar className="h-8 w-8 border-2 border-background">
               <AvatarImage
-                src="https://blockselements.co/avatar-02.jpg"
+                src="https://bloks-elements.vercel.app/avatar-02.jpg"
                 alt="User 2"
               />
               <AvatarFallback>LS</AvatarFallback>
             </Avatar>
             <Avatar className="h-8 w-8 border-2 border-background">
               <AvatarImage
-                src="https://blockselements.co/avatar-03.png"
+                src="https://bloks-elements.vercel.app/avatar-03.png"
                 alt="User 3"
               />
               <AvatarFallback>TE</AvatarFallback>

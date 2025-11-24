@@ -75,7 +75,7 @@ export default function Login07() {
                 <Input
                   id="email"
                   className="peer ps-9"
-                  placeholder="asad@blockselements.co"
+                  placeholder="asad@emeraldflow.co"
                   type="email"
                 />
                 <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">

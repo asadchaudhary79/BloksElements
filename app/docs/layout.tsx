@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Demo — blockselements.co",
+  title: "Docs — Emerald Flow",
   description:
-    "Interactive demo showcasing the blockselements.co component library with code editor, block browser, and category explorer.",
+    "Interactive Docs showcasing the Emerald Flow component library with code editor, block browser, and category explorer.",
   robots: { index: false, follow: false },
 };
 
-export default function DemoLayout({
+export default function DocsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

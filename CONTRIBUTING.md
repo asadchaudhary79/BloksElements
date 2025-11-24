@@ -1,6 +1,6 @@
 # Contributing
 
-We welcome contributions to our project! This guide will help you get started with development and contributing to the blocks registry.
+Thanks for helping shape **Emerald Flow**! This guide explains how to run the project locally, add new blocks/patterns, and submit changes to the shadcn-compatible registry.
 
 ## Development
 
@@ -55,29 +55,37 @@ bunx ultracite lint         # Lint codebase with Biome
 
 ```
 blocks/
-├── app/                    # Next.js app router pages
-├── components/             # Shared UI components
+├── app/                        # Next.js App Router routes (landing, docs, blocks, patterns)
+├── components/                 # Shared UI + layout components
 ├── content/
-│   ├── components/         # Block implementations
-│   ├── markdown/           # Generated MDX docs
-│   ├── blocks-metadata.ts  # Block registry metadata
-│   └── blocks-categories.tsx # Category definitions
-├── lib/                    # Utility functions
+│   ├── components/             # Block implementations grouped by category
+│   ├── markdown/               # Generated MDX docs per block
+│   ├── blocks-metadata.ts      # Registry metadata
+│   ├── blocks-categories.tsx   # Category definitions
+│   └── patterns.ts             # Gradient/pattern definitions
 ├── public/
-│   └── r/                  # Registry JSON files
-├── scripts/                # Build and generation scripts
-└── registry.json           # Main registry file
+│   └── r/                      # Generated registry JSON files
+├── scripts/                    # Registry + doc generation helpers
+└── config.ts                   # Global site metadata
 ```
 
-### Adding New Blocks
+### Adding New Blocks or Patterns
 
-1. **Create the component** in `content/components/{category}/{block-id}.tsx`
-2. **Register metadata** in `content/blocks-metadata.ts`
+1. **Create the component/pattern**
+   - Blocks → `content/components/{category}/{block-id}.tsx`
+   - Patterns → append to `content/patterns.ts`
+2. **Register metadata**
+   - Blocks → `content/blocks-metadata.ts`
+   - Categories (if new) → `content/blocks-categories.tsx`
 3. **Map the component** in `content/blocks-components.tsx`
-4. **Export from category** in `content/components/{category}/index.ts`
-5. **Generate registry** with `bun run generate:registry`
+4. **Export from category index** (`content/components/{category}/index.ts`)
+5. **Regenerate docs/registry**
+   ```bash
+   bun run generate:markdown
+   bun run generate:registry
+   ```
 
-See [CLAUDE.md](./CLAUDE.md) for detailed development guidelines.
+See [CLAUDE.md](./CLAUDE.md) for detailed component standards, prop naming conventions, and accessibility guidelines.
 
 ## Contributing Process
 
@@ -117,4 +125,11 @@ See [CLAUDE.md](./CLAUDE.md) for detailed development guidelines.
 
 8. Open a pull request on the original repository.
 
-Thank you for contributing to our project!
+### PR Checklist
+
+- [ ] Screenshots for visual changes (if UI)
+- [ ] Lint + build succeeded
+- [ ] Registry/MDX regenerated when necessary
+- [ ] Added docs/metadata for new blocks
+
+Thank you for contributing to Emerald Flow!

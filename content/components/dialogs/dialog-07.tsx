@@ -44,7 +44,7 @@ export default function Dialog08() {
               id="email"
               name="email"
               type="email"
-              placeholder="asad@blockselements.co"
+              placeholder="asad@emeraldflow.co"
               className="mt-2"
               disabled
             />

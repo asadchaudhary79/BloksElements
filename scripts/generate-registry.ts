@@ -17,7 +17,7 @@ const DEFAULT_CONFIG: GeneratorConfig = {
   author: "Asad Chaudhary <https://github.com/asadchaudhary79>",
   schema: "https://ui.shadcn.com/schema/registry.json",
   itemSchema: "https://ui.shadcn.com/schema/registry-item.json",
-  homepage: "https://blockselements.co",
+  homepage: "https://bloks-elements.vercel.app",
   name: "blocks",
 };
 

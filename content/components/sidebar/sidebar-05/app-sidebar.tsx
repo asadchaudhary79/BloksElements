@@ -458,7 +458,7 @@ export function AppSidebar() {
                   <div className="flex-1 text-left min-w-0">
                     <div className="text-sm font-medium truncate">asad</div>
                     <div className="text-xs text-muted-foreground truncate">
-                      asad@blockselements.co
+                      asad@emeraldflow.co
                     </div>
                   </div>
                 </div>

@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /private/
 Disallow: /blocks/preview/
-Disallow: /demo/
+Disallow: /docs/
 
-Sitemap: https://blockselements.co/sitemap.xml
+Sitemap: https://bloks-elements.vercel.app/sitemap.xml

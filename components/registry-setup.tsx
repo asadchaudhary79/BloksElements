@@ -42,7 +42,7 @@ export function RegistrySetup({
         <DialogHeader>
           <DialogTitle>Setup Registry</DialogTitle>
           <DialogDescription>
-            Use the code below to configure the @blockselements registry for
+            Use the code below to configure the @emeraldflow registry for
             your project.
           </DialogDescription>
         </DialogHeader>
@@ -70,7 +70,7 @@ export function RegistrySetup({
         </div>
         <div className="overflow-x-auto bg-muted p-8 rounded-md min-h-[50px]">
           <pre className="text-sm font-mono">
-            <code>npx shadcn@latest add @blockselements/[component-name]</code>
+            <code>npx shadcn@latest add @emeraldflow/[component-name]</code>
           </pre>
         </div>
         <div className="font-medium">
@@ -87,6 +87,6 @@ export function RegistrySetup({
 }
 
 const registrySetupCode = `"registries": {
-  "@blockselements": "https://blockselements.co/r/{name}.json"
+  "@emeraldflow": "https://bloks-elements.vercel.app/r/{name}.json"
 }
 `;

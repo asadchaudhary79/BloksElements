@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config";
 import { blocksCategoriesMetadata } from "@/content/blocks-categories";
 import { blocksMetadata } from "@/content/blocks-metadata";
+import { gridPatterns } from "@/content/patterns";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,7 +23,6 @@ import {
   IconFolder,
   IconHeart,
   IconCheck,
-  IconArrowRight,
   IconBrandGithub,
   IconShield,
   IconChartBar,
@@ -52,6 +52,12 @@ export const metadata: Metadata = {
 export default function Home() {
   const totalBlocks = blocksMetadata.length;
   const totalCategories = blocksCategoriesMetadata.length;
+  const totalPatterns = gridPatterns.length;
+  const latestBlocks = [...blocksMetadata].slice(-4).reverse();
+  const latestPatterns = [...gridPatterns].slice(-4).reverse();
+  const categoryLabelMap = Object.fromEntries(
+    blocksCategoriesMetadata.map((category) => [category.id, category.name])
+  );
 
   return (
     <div className="w-full space-y-32 pb-24">
@@ -64,27 +70,24 @@ export default function Home() {
               className="text-sm px-4 py-1.5 border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
             >
               <IconSparkles className="size-3.5 mr-1.5" />
-              Free & Open Source
+              Latest drop · {latestPatterns[0]?.name ?? "Fresh patterns"}
             </Badge>
           </div>
 
           <div className="space-y-6">
             <h1 className="font-bold text-5xl/[1.1] text-foreground tracking-tight md:text-6xl/[1.1] lg:text-7xl/[1.1] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
-              Building Blocks
-              <br />
-              <span className="bg-linear-to-r from-emerald-400 via-emerald-300 to-emerald-500 bg-clip-text text-transparent dark:from-emerald-400 dark:via-emerald-300 dark:to-emerald-500">
-                for the Web
+              Ship polished React UI
+              <span className="block bg-linear-to-r from-emerald-400 via-emerald-300 to-emerald-500 bg-clip-text text-transparent dark:from-emerald-400 dark:via-emerald-300 dark:to-emerald-500">
+                with blocks & patterns
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-              Clean, modern building blocks. Copy and paste into your apps.
-              Works with all React frameworks. Open Source. Free forever.
+              Clean, modern building blocks paired with atmospheric background patterns.
+              Copy the JSX, drop it in your Next.js app, and keep shipping. Open source,
+              theme aware, and updated every week.
             </p>
           </div>
         </div>
-
-        {/* Quick Stats */}
-        <div className="border-t border-border/50 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-450"></div>
 
         <div className="flex flex-wrap items-center justify-center gap-4 pt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-600">
           <Button
@@ -92,7 +95,7 @@ export default function Home() {
             size="lg"
             className="text-base h-12 px-8 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all"
           >
-            <Link href="/demo">
+            <Link href="/docs">
               <IconRocket className="size-5" />
               Explore Blocks
             </Link>
@@ -108,6 +111,39 @@ export default function Home() {
               View on GitHub
             </a>
           </Button>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="pt-8">
+          <div className="grid gap-4 border border-border/60 rounded-3xl bg-background/40 p-6 sm:grid-cols-3">
+            <div className="space-y-1">
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                Blocks
+              </p>
+              <p className="text-3xl font-semibold">{totalBlocks}+</p>
+              <p className="text-sm text-muted-foreground">
+                Production-ready shadcn/ui compositions
+              </p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                Categories
+              </p>
+              <p className="text-3xl font-semibold">{totalCategories}</p>
+              <p className="text-sm text-muted-foreground">
+                From AI dashboards to marketing pages
+              </p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                Patterns
+              </p>
+              <p className="text-3xl font-semibold">{totalPatterns}</p>
+              <p className="text-sm text-muted-foreground">
+                Gradient backdrops ready for any layout
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -189,80 +225,152 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories Section */}
+      {/* Latest Drops Section */}
       <section className="space-y-12">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="space-y-3">
-            <Badge
-              variant="outline"
-              className="text-xs uppercase tracking-wider"
-            >
-              Explore
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-              Explore Categories
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Browse {totalCategories} categories with {totalBlocks}+
-              ready-to-use blocks
-            </p>
-          </div>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="hidden md:flex border-2"
-          >
-            <Link href="/demo">
-              View All
-              <IconArrowRight className="size-4 ml-2" />
-            </Link>
-          </Button>
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <Badge variant="outline" className="text-xs uppercase tracking-wider">
+            Fresh drops
+          </Badge>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+            New patterns & blocks
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            We add new gradients and ready-to-ship blocks every week. Here’s what just landed.
+          </p>
         </div>
 
-        <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {blocksCategoriesMetadata.map((block) => (
-            <Link
-              href={`/${block.id}`}
-              key={`${block.id}-${block.name}`}
-              className="group"
-            >
-              <Card className="relative h-full overflow-hidden border border-white/10 bg-card/80 backdrop-blur-xl transition-all duration-300 hover:-translate-y-3 hover:border-emerald-500/60 hover:shadow-[0_25px_45px_rgba(16,185,129,0.25)]">
-                <div className="absolute inset-0 bg-linear-to-br from-emerald-500/0 via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <CardHeader className="relative pb-6">
-                  <div className="relative mb-8">
-                    <div className="aspect-video w-full rounded-2xl border border-white/10 bg-black/30 flex items-center justify-center overflow-hidden shadow-inner shadow-black/40 transition-all duration-500 group-hover:border-emerald-500/40 group-hover:shadow-emerald-500/20">
-                      <block.thumbnail className="w-full h-full object-cover opacity-80 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" />
-                    </div>
-                    <div className="absolute -bottom-4 left-5 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 shadow-lg shadow-emerald-500/20">
-                      <IconFileCode className="size-3.5" />
-                      {block.count} blocks
-                    </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card className="border-2">
+            <CardHeader className="space-y-3">
+              <Badge variant="secondary" className="w-fit bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/20">
+                Patterns
+              </Badge>
+              <CardTitle className="text-2xl">Latest background vibes</CardTitle>
+              <CardDescription>
+                Drop these gradients behind your hero sections, pricing tables, and product shots.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {latestPatterns.map((pattern) => (
+                <div
+                  key={pattern.id}
+                  className="flex items-center gap-4 rounded-2xl border border-white/10 bg-card/60 p-3"
+                >
+                  <div className="relative size-12 rounded-xl border border-white/10 overflow-hidden">
+                    <div className="absolute inset-0" style={pattern.style} />
                   </div>
-
-                  <div className="space-y-1">
-                    <CardTitle className="text-xl font-semibold">
-                      {block.name}
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground">
-                      Curated components for modern UI.
+                  <div className="flex-1 text-left">
+                    <p className="font-semibold text-sm">{pattern.name}</p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {pattern.category} pattern
                     </p>
                   </div>
-                </CardHeader>
-                <CardContent className="relative pt-4">
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <IconFolder className="size-4 text-emerald-500/80" />
-                      <span className="font-medium">View details</span>
-                    </div>
-                    <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground/70">
-                      Explore
-                    </span>
+                  {pattern.badge ? (
+                    <Badge variant="outline" className="text-xs">
+                      {pattern.badge}
+                    </Badge>
+                  ) : null}
+                </div>
+              ))}
+              <Button asChild variant="outline" size="lg" className="w-full rounded-full border-2">
+                <Link href="/patterns">Browse patterns</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2">
+            <CardHeader className="space-y-3">
+              <Badge variant="secondary" className="w-fit bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/20">
+                Blocks
+              </Badge>
+              <CardTitle className="text-2xl">Newest component drops</CardTitle>
+              <CardDescription>
+                From AI chat layouts to dialog flows — here are the latest blocks in the library.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {latestBlocks.map((block) => (
+                <Link
+                  key={block.id}
+                  href={`/${block.category}`}
+                  className="flex items-center gap-4 rounded-2xl border border-white/10 bg-card/60 p-3 transition hover:border-emerald-500/60 hover:-translate-y-0.5"
+                >
+                  <div className="size-12 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-emerald-500 flex items-center justify-center">
+                    <IconFileCode className="size-5" />
                   </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+                  <div className="flex-1 text-left">
+                    <p className="font-semibold text-sm">{block.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {categoryLabelMap[block.category] ?? block.category}
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="text-xs uppercase tracking-[0.2em]">
+                    New
+                  </Badge>
+                </Link>
+              ))}
+              <Button asChild size="lg" className="w-full rounded-full">
+                <Link href="/blocks">View all categories</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Pattern Spotlight */}
+      <section className="relative overflow-hidden rounded-[32px] border border-emerald-500/20 bg-background p-10">
+        <div
+          className="absolute inset-0 opacity-70"
+          style={latestPatterns[0]?.style}
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-background/30 via-background/70 to-background/90" />
+        <div className="relative grid gap-10 lg:grid-cols-2">
+          <div className="space-y-5">
+            <Badge variant="secondary" className="bg-white/10 text-white border-white/30 w-fit">
+              Design + Build
+            </Badge>
+            <h3 className="text-4xl font-bold text-white">
+              Pair gradients with ready-made blocks
+            </h3>
+            <p className="text-lg text-white/80">
+              Use patterns from the new gallery to make every section feel intentional. Combine
+              them with dashboard-ready blocks and your app feels premium instantly.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button asChild size="lg" className="rounded-full bg-white text-emerald-700 hover:bg-slate-100">
+                <Link href="/patterns">Open pattern gallery</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full border-white/60 text-white hover:bg-white/10">
+                <Link href="/blocks">Browse block categories</Link>
+              </Button>
+            </div>
+          </div>
+          <div className="rounded-3xl border border-white/30 bg-black/30 p-6 backdrop-blur">
+            <p className="text-sm uppercase tracking-[0.3em] text-white/60">
+              Featured pattern
+            </p>
+            <h4 className="mt-2 text-2xl font-semibold text-white">
+              {latestPatterns[0]?.name}
+            </h4>
+            <p className="mt-2 text-white/70 text-sm">
+              {latestPatterns[0]?.description ??
+                "A soft glow designed to center attention on your hero content."}
+            </p>
+            <div className="mt-6 space-y-3 text-white/80 text-sm">
+              <div className="flex items-center justify-between">
+                <span>Category</span>
+                <span className="capitalize">{latestPatterns[0]?.category}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Copy options</span>
+                <span>Tailwind CSS · Plain CSS</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Updated</span>
+                <span>Today</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -369,7 +477,7 @@ export default function Home() {
               size="lg"
               className="text-base h-12 px-8 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all"
             >
-              <Link href="/demo">
+              <Link href="/docs">
                 <IconRocket className="size-5" />
                 Explore All Blocks
               </Link>

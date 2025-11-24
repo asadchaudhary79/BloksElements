@@ -1,9 +1,16 @@
-````tsx
+```tsx
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Users } from "lucide-react";
 
@@ -40,15 +47,24 @@ export default function Card02() {
         <CardFooter className="flex items-center justify-between border-t pt-4">
           <div className="flex -space-x-2">
             <Avatar className="h-8 w-8 border-2 border-background">
-              <AvatarImage src="https://blockselements.co/avatar-01.png" alt="User 1" />
+              <AvatarImage
+                src="https://bloks-elements.vercel.app/avatar-01.png"
+                alt="User 1"
+              />
               <AvatarFallback>AC</AvatarFallback>
             </Avatar>
             <Avatar className="h-8 w-8 border-2 border-background">
-              <AvatarImage src="https://blockselements.co/avatar-02.jpg" alt="User 2" />
+              <AvatarImage
+                src="https://bloks-elements.vercel.app/avatar-02.jpg"
+                alt="User 2"
+              />
               <AvatarFallback>LS</AvatarFallback>
             </Avatar>
             <Avatar className="h-8 w-8 border-2 border-background">
-              <AvatarImage src="https://blockselements.co/avatar-03.png" alt="User 3" />
+              <AvatarImage
+                src="https://bloks-elements.vercel.app/avatar-03.png"
+                alt="User 3"
+              />
               <AvatarFallback>TE</AvatarFallback>
             </Avatar>
             <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-muted text-xs font-medium">
@@ -61,5 +77,4 @@ export default function Card02() {
     </div>
   );
 }
-````
-
+```

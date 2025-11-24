@@ -42,6 +42,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useCopyToClipboard } from "@/hooks/use-copy";
 import Link from "next/link";
+import { siteConfig } from "@/config";
 
 const sampleFileTree: FileTreeItem[] = [
   {
@@ -79,9 +80,48 @@ const sampleFileTree: FileTreeItem[] = [
   },
 ];
 
-const installCommand = `npx shadcn@latest add @blockselements/login-01`;
+const installCommand = `npx shadcn@latest add @emeraldflow/login-01`;
 
-export default function DemoPage() {
+const sidebarNavItems = [
+  {
+    id: "overview",
+    label: "Overview",
+    hint: "Stats, quick start, and features",
+    icon: IconSparkles,
+  },
+  {
+    id: "code-editor",
+    label: "Code Editor",
+    hint: "Interactive file tree playground",
+    icon: IconCode,
+  },
+  {
+    id: "blocks",
+    label: "All Blocks",
+    hint: "Search every Emerald Flow block",
+    icon: IconFileCode,
+  },
+  {
+    id: "categories",
+    label: "Categories",
+    hint: "Browse by block collections",
+    icon: IconFolder,
+  },
+];
+
+const resourceLinks = [
+  { href: "/blocks", label: "Blocks Library", icon: IconFileCode },
+  { href: "/patterns", label: "Pattern Gallery", icon: IconSparkles },
+  { href: "/docs", label: "Docs Home", icon: IconCode },
+  {
+    href: siteConfig.links.github,
+    label: "GitHub Repo",
+    icon: IconRocket,
+    external: true,
+  },
+];
+
+export default function DocsPage() {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
@@ -116,32 +156,31 @@ export default function DemoPage() {
     setPage(1);
   }, [searchValue]);
 
-  const menuItems = [
-    { id: "overview", label: "Overview", icon: IconRocket },
-    { id: "code-editor", label: "Code Editor", icon: IconCode },
-    { id: "blocks", label: "All Blocks", icon: IconFileCode },
-    { id: "categories", label: "Categories", icon: IconFolder },
-  ];
-
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <Sidebar className="border-r">
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel>Demo Navigation</SidebarGroupLabel>
+              <SidebarGroupLabel>Emerald Flow Docs</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {menuItems.map((item) => {
+                  {sidebarNavItems.map((item) => {
                     const Icon = item.icon;
                     return (
                       <SidebarMenuItem key={item.id}>
                         <SidebarMenuButton
                           isActive={activeTab === item.id}
                           onClick={() => setActiveTab(item.id)}
+                          className="flex flex-col items-start gap-1 rounded-xl px-3 py-2 data-[active=true]:bg-emerald-500/10"
                         >
-                          <Icon className="size-4" />
-                          <span>{item.label}</span>
+                          <div className="flex items-center gap-2 text-sm font-medium">
+                            <Icon className="size-4" />
+                            <span>{item.label}</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground/70">
+                            {item.hint}
+                          </p>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     );
@@ -154,14 +193,23 @@ export default function DemoPage() {
               <SidebarGroupLabel>Quick Links</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/">
-                        <IconSparkles className="size-4" />
-                        <span>Browse Blocks</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  {resourceLinks.map((link) => {
+                    const Icon = link.icon;
+                    return (
+                      <SidebarMenuItem key={link.label}>
+                        <SidebarMenuButton asChild>
+                          <Link
+                            href={link.href}
+                            target={link.external ? "_blank" : undefined}
+                            rel={link.external ? "noreferrer" : undefined}
+                          >
+                            <Icon className="size-4" />
+                            <span>{link.label}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
@@ -172,21 +220,34 @@ export default function DemoPage() {
           <div className="container mx-auto p-8 max-w-7xl">
             {activeTab === "overview" && (
               <div className="space-y-8">
-                <div>
-                  <h1 className="text-4xl font-bold tracking-tight mb-2">
-                    blockselements.co Demo
-                  </h1>
-                  <p className="text-muted-foreground text-lg">
-                    Explore the building blocks for the web. Copy and paste
-                    beautiful, accessible components into your apps.
-                  </p>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      variant="secondary"
+                      className="text-sm px-4 py-1.5 border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                    >
+                      <IconSparkles className="size-3.5 mr-1.5" />
+                      Documentation
+                    </Badge>
+                  </div>
+                  <div>
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+                      {siteConfig.name} Docs
+                    </h1>
+                    <p className="text-muted-foreground text-lg max-w-2xl">
+                      Explore the building blocks for the web. Copy and paste
+                      beautiful, accessible components into your apps.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-3">
-                  <Card>
+                  <Card className="border-2 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 group">
                     <CardHeader>
+                      <div className="size-14 rounded-xl bg-linear-to-br from-emerald-500/10 to-emerald-600/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <IconFileCode className="size-7 text-emerald-600 dark:text-emerald-400" />
+                      </div>
                       <CardTitle className="flex items-center gap-2">
-                        <IconFileCode className="size-5" />
                         Total Blocks
                       </CardTitle>
                     </CardHeader>
@@ -198,10 +259,12 @@ export default function DemoPage() {
                     </CardContent>
                   </Card>
 
-                  <Card>
+                  <Card className="border-2 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 group">
                     <CardHeader>
+                      <div className="size-14 rounded-xl bg-linear-to-br from-emerald-500/10 to-emerald-600/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <IconFolder className="size-7 text-emerald-600 dark:text-emerald-400" />
+                      </div>
                       <CardTitle className="flex items-center gap-2">
-                        <IconFolder className="size-5" />
                         Categories
                       </CardTitle>
                     </CardHeader>
@@ -215,17 +278,19 @@ export default function DemoPage() {
                     </CardContent>
                   </Card>
 
-                  <Card>
+                  <Card className="border-2 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 group">
                     <CardHeader>
+                      <div className="size-14 rounded-xl bg-linear-to-br from-emerald-500/10 to-emerald-600/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <IconRocket className="size-7 text-emerald-600 dark:text-emerald-400" />
+                      </div>
                       <CardTitle className="flex items-center gap-2">
-                        <IconRocket className="size-5" />
                         Installation
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
-                        <code className="text-sm bg-muted px-2 py-1 rounded block">
-                          npx shadcn@latest add @blockselements/block-name
+                        <code className="text-sm bg-muted px-3 py-2 rounded-lg block border border-border">
+                          npx shadcn@latest add @emeraldflow/block-name
                         </code>
                         <p className="text-sm text-muted-foreground">
                           One command to add any block
@@ -235,9 +300,12 @@ export default function DemoPage() {
                   </Card>
                 </div>
 
-                <Card>
+                <Card className="border-2 bg-linear-to-br from-emerald-500/5 via-emerald-500/2 to-transparent">
                   <CardHeader>
-                    <CardTitle>Quick Start</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <IconRocket className="size-5 text-emerald-600 dark:text-emerald-400" />
+                      Quick Start
+                    </CardTitle>
                     <CardDescription>
                       Get started with blocks in seconds
                     </CardDescription>
@@ -255,7 +323,7 @@ export default function DemoPage() {
                           onClick={() =>
                             copyRegistry(`{
   "registries": {
-    "@blockselements": "https://blockselements.co/r/{name}.json"
+    "@emeraldflow": "https://bloks-elements.vercel.app/r/{name}.json"
   }
 }`)
                           }
@@ -269,7 +337,7 @@ export default function DemoPage() {
                         <pre className="text-sm overflow-x-auto">
                           <code>{`{
   "registries": {
-    "@blockselements": "https://blockselements.co/r/{name}.json"
+    "@emeraldflow": "https://bloks-elements.vercel.app/r/{name}.json"
   }
 }`}</code>
                         </pre>
@@ -310,18 +378,21 @@ export default function DemoPage() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="border-2">
                   <CardHeader>
-                    <CardTitle>Features</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <IconSparkles className="size-5 text-emerald-600 dark:text-emerald-400" />
+                      Features
+                    </CardTitle>
                     <CardDescription>
-                      What makes blockselements.co special
+                      What makes Emerald Flow special
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <div className="space-y-2">
-                        <h3 className="font-semibold flex items-center gap-2">
-                          <IconSparkles className="size-4" />
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div className="space-y-2 p-4 rounded-lg border border-border/50 hover:border-emerald-500/50 transition-colors">
+                        <h3 className="font-semibold flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                          <IconSparkles className="size-5" />
                           Beautiful & Accessible
                         </h3>
                         <p className="text-sm text-muted-foreground">
@@ -330,9 +401,9 @@ export default function DemoPage() {
                           primitives.
                         </p>
                       </div>
-                      <div className="space-y-2">
-                        <h3 className="font-semibold flex items-center gap-2">
-                          <IconCode className="size-4" />
+                      <div className="space-y-2 p-4 rounded-lg border border-border/50 hover:border-emerald-500/50 transition-colors">
+                        <h3 className="font-semibold flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                          <IconCode className="size-5" />
                           Type-Safe
                         </h3>
                         <p className="text-sm text-muted-foreground">
@@ -340,9 +411,9 @@ export default function DemoPage() {
                           IntelliSense autocomplete.
                         </p>
                       </div>
-                      <div className="space-y-2">
-                        <h3 className="font-semibold flex items-center gap-2">
-                          <IconCopy className="size-4" />
+                      <div className="space-y-2 p-4 rounded-lg border border-border/50 hover:border-emerald-500/50 transition-colors">
+                        <h3 className="font-semibold flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                          <IconCopy className="size-5" />
                           Copy & Paste
                         </h3>
                         <p className="text-sm text-muted-foreground">
@@ -350,9 +421,9 @@ export default function DemoPage() {
                           and own it completely.
                         </p>
                       </div>
-                      <div className="space-y-2">
-                        <h3 className="font-semibold flex items-center gap-2">
-                          <IconRocket className="size-4" />
+                      <div className="space-y-2 p-4 rounded-lg border border-border/50 hover:border-emerald-500/50 transition-colors">
+                        <h3 className="font-semibold flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                          <IconRocket className="size-5" />
                           Framework Agnostic
                         </h3>
                         <p className="text-sm text-muted-foreground">

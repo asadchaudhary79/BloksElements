@@ -2,11 +2,17 @@
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { IconPackages, IconInfoCircle } from "@tabler/icons-react";
+import { IconPackages } from "@tabler/icons-react";
 import Link from "next/link";
 import { RegistrySetup } from "@/components/registry-setup";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { siteConfig } from "@/config";
+
+const NAV_ITEMS = [
+  { href: "/blocks", label: "Blocks" },
+  { href: "/patterns", label: "Patterns" },
+
+  { href: "/about", label: "About" },
+];
 
 export function Header() {
   return (
@@ -20,27 +26,23 @@ export function Header() {
             </div>
           </div>
           <h1 className="font-semibold text-xl bg-linear-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
-            Bloks Elements
+            {siteConfig.name}
           </h1>
         </Link>
 
-        <div className="flex items-center space-x-2">
-          <Link
-            href="/about"
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "rounded-full hidden sm:flex group gap-2"
-            )}
-          >
-            <div className="relative">
-              <div className="absolute inset-0 rounded-md bg-linear-to-br from-emerald-500 to-emerald-600 opacity-0 group-hover:opacity-20 blur-sm transition-opacity" />
-              <div className="relative size-5 rounded-md bg-linear-to-br from-emerald-500/10 to-emerald-600/10 flex items-center justify-center group-hover:from-emerald-500/20 group-hover:to-emerald-600/20 transition-all">
-                <IconInfoCircle className="size-3.5 text-emerald-600 dark:text-emerald-400" />
-              </div>
-            </div>
-            About
-          </Link>
+        <nav className="hidden md:flex items-center gap-1 rounded-full border border-white/10 bg-background/70 px-1 py-1 backdrop-blur">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground hover:bg-emerald-500/10"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
 
+        <div className="flex items-center space-x-2">
           <RegistrySetup />
 
           <a
@@ -65,8 +67,6 @@ export function Header() {
             </svg>
             <span className="hidden sm:inline">Contribute Here !</span>
           </a>
-
-          <ThemeSwitcher />
         </div>
       </div>
     </div>

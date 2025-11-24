@@ -68,15 +68,15 @@ export default function AboutPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Blocks Elements was created to provide developers with a comprehensive
-            library of beautiful, production-ready UI components. We believe that
-            building great user interfaces shouldn't require starting from scratch
-            every time.
+            Blocks Elements was created to provide developers with a
+            comprehensive library of beautiful, production-ready UI components.
+            We believe that building great user interfaces shouldn't require
+            starting from scratch every time.
           </p>
           <p className="text-muted-foreground">
-            Our goal is to make it easy for developers to find, copy, and customize
-            high-quality components that follow modern design principles and
-            accessibility standards.
+            Our goal is to make it easy for developers to find, copy, and
+            customize high-quality components that follow modern design
+            principles and accessibility standards.
           </p>
         </CardContent>
       </Card>
@@ -145,7 +145,8 @@ export default function AboutPage() {
               </h3>
               <p className="text-sm text-muted-foreground">
                 All blocks are built with accessibility in mind, following WCAG
-                guidelines and using Radix UI primitives for maximum compatibility.
+                guidelines and using Radix UI primitives for maximum
+                compatibility.
               </p>
             </div>
             <div className="space-y-2">
@@ -262,7 +263,7 @@ export default function AboutPage() {
               <Link href="/">Browse All Blocks</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href="/demo">View Demo</Link>
+              <Link href="/docs">View Docs</Link>
             </Button>
           </div>
         </CardContent>
@@ -270,4 +271,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

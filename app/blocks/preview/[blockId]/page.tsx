@@ -36,33 +36,6 @@ export default async function BlockPreviewPage({ params }: Params) {
 
   return (
     <div className="relative min-h-screen w-full ">
-      {/* Header Navigation */}
-      <div className="sticky top-0 z-50 border-b border-border/50 bg-background backdrop-blur-md ">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="gap-2 text-muted-foreground hover:text-foreground"
-              >
-                <Link href="/demo">
-                  <ArrowLeftIcon className="size-4" />
-                  Back to Demo
-                </Link>
-              </Button>
-              <div className="h-6 w-px bg-border" />
-              <div className="flex flex-col">
-                <span className="text-xs text-muted-foreground">Preview</span>
-                <span className="text-sm font-semibold">{blockName}</span>
-              </div>
-            </div>
-            <PreviewThemeSwitcher />
-          </div>
-        </div>
-      </div>
-
       {/* Preview Container */}
       <div className="relative flex min-h-[calc(100vh-4rem)] w-full items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="w-full max-w-7xl">

@@ -33,7 +33,7 @@ export default function Login02() {
                 id="email-login-02"
                 name="email-login-02"
                 autoComplete="email"
-                placeholder="asad@blockselements.co"
+                placeholder="asad@emeraldflow.co"
                 className="mt-2"
               />
             </div>

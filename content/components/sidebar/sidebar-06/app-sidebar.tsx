@@ -429,7 +429,7 @@ export function AppSidebar() {
                           asad
                         </div>
                         <div className="text-xs text-muted-foreground truncate">
-                          asad@blockselements.co
+                          asad@emeraldflow.co
                         </div>
                       </div>
                     </div>

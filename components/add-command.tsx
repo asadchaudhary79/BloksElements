@@ -14,7 +14,7 @@ export function AddCommand({ name }: { name: string }) {
       size="sm"
       className="pl-2! rounded-lg"
       onClick={() => {
-        copyToClipboard(`npx shadcn@latest add @blockselements/${name}`);
+        copyToClipboard(`npx shadcn@latest add @emeraldflow/${name}`);
         toast.success(`npx command copied to clipboard`);
       }}
     >
@@ -47,7 +47,7 @@ export function AddCommand({ name }: { name: string }) {
           ></line>
         </svg>
       )}
-      {`@blockselements/${name}`}
+      {`@emeraldflow/${name}`}
     </Button>
   );
 }

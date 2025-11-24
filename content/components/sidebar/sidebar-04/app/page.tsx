@@ -21,7 +21,7 @@ function MailPreview() {
           From: {selectedMail.name} ({selectedMail.email})
         </div>
       </div>
-      <div className="p-4 text-sm whitespace-pre-wrap">{`${selectedMail.teaser}\n\nThis is a sample message body for the selected email.\nIt demonstrates the preview area on the right side.`}</div>
+      <div className="p-4 text-sm whitespace-pre-wrap">{`${selectedMail.teaser}\n\nThis is a sample message body for the selected email.\nIt Docsnstrates the preview area on the right side.`}</div>
     </div>
   );
 }
