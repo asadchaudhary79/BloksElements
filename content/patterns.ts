@@ -1482,4 +1482,87 @@ export const gridPatterns: Pattern[] = [
   {/* Your Content/Components */}
 </div>`,
   },
+  {
+    id: "pattern-light-grid-weave",
+    name: "Light Grid Weave",
+    category: "patterns",
+    badge: "New",
+    description: "Soft blueprint-inspired grid with subtle highlights",
+    style: {
+      background: "#f8fafc",
+      backgroundImage: `linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(255, 255, 255, 0))`,
+      backgroundSize: "60px 60px, 60px 60px, 100% 100%",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#f8fafc] relative overflow-hidden">
+  {/* Light Grid Weave */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(255, 255, 255, 0))\`,
+      backgroundSize: "60px 60px, 60px 60px, 100% 100%",
+      backgroundColor: "#f8fafc",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "pattern-dark-blueprint",
+    name: "Dark Blueprint",
+    category: "patterns",
+    badge: "New",
+    description: "High-contrast blueprint with glowing intersections",
+    style: {
+      background: "#020617",
+      backgroundImage: `linear-gradient(90deg, rgba(79, 70, 229, 0.2) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(79, 70, 229, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 1px 1px, rgba(129, 140, 248, 0.8) 1px, transparent 1px)`,
+      backgroundSize: "80px 80px, 80px 80px, 80px 80px",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#020617] relative overflow-hidden">
+  {/* Dark Blueprint */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`linear-gradient(90deg, rgba(79, 70, 229, 0.2) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(79, 70, 229, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 1px 1px, rgba(129, 140, 248, 0.8) 1px, transparent 1px)\`,
+      backgroundSize: "80px 80px, 80px 80px, 80px 80px",
+      backgroundColor: "#020617",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+
+  {
+    id: "pattern-carbon-mesh",
+    name: "Carbon Mesh",
+    category: "patterns",
+    badge: "New",
+    description: "Dark carbon-fiber mesh with subtle glow",
+    style: {
+      background: "#050608",
+      backgroundImage: `radial-gradient(circle at 25% 25%, rgba(148, 163, 184, 0.08) 0, rgba(148, 163, 184, 0.08) 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, rgba(148, 163, 184, 0.08) 0, rgba(148, 163, 184, 0.08) 2px, transparent 2px)`,
+      backgroundSize: "100px 100px",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#050608] relative overflow-hidden">
+  {/* Carbon Mesh */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 25% 25%, rgba(148, 163, 184, 0.08) 0, rgba(148, 163, 184, 0.08) 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, rgba(148, 163, 184, 0.08) 0, rgba(148, 163, 184, 0.08) 2px, transparent 2px)\`,
+      backgroundSize: "100px 100px",
+      backgroundColor: "#050608",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
 ];
