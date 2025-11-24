@@ -1362,4 +1362,124 @@ export const gridPatterns: Pattern[] = [
  {/* Your Content/Components */}
 </div>`,
   },
+  {
+    id: "gradient-morning-blush",
+    name: "Morning Blush",
+    category: "gradients",
+    badge: "New",
+    style: {
+      background: "#fff7f3",
+      backgroundImage: `radial-gradient(circle at 20% 20%, rgba(255, 186, 197, 0.8), transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(255, 214, 165, 0.7), transparent 55%),
+        linear-gradient(120deg, #fff8f3 0%, #ffe1e1 60%, #fdf5f0 100%)`,
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#fff7f3] relative">
+  {/* Morning Blush Background */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 20% 20%, rgba(255, 186, 197, 0.8), transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(255, 214, 165, 0.7), transparent 55%),
+        linear-gradient(120deg, #fff8f3 0%, #ffe1e1 60%, #fdf5f0 100%)\`,
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
+  {
+    id: "gradient-cloud-haze",
+    name: "Cloud Haze",
+    category: "gradients",
+    badge: "New",
+    style: {
+      background: "#f5f7fb",
+      backgroundImage: `radial-gradient(circle at 30% 40%, rgba(173, 216, 255, 0.45), transparent 55%),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.9), transparent 40%),
+        linear-gradient(180deg, #f5f7fb 0%, #e6f0ff 100%)`,
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#f5f7fb] relative">
+  {/* Cloud Haze Background */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 30% 40%, rgba(173, 216, 255, 0.45), transparent 55%),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.9), transparent 40%),
+        linear-gradient(180deg, #f5f7fb 0%, #e6f0ff 100%)\`,
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
+  {
+    id: "gradient-sunlit-mint",
+    name: "Sunlit Mint",
+    category: "gradients",
+    badge: "New",
+    style: {
+      background: "#f1fff6",
+      backgroundImage: `radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.7), transparent 45%),
+        radial-gradient(circle at 15% 70%, rgba(185, 255, 210, 0.6), transparent 55%),
+        linear-gradient(135deg, #f5fff2 0%, #d9fbe8 100%)`,
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#f1fff6] relative">
+  {/* Sunlit Mint Background */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.7), transparent 45%),
+        radial-gradient(circle at 15% 70%, rgba(185, 255, 210, 0.6), transparent 55%),
+        linear-gradient(135deg, #f5fff2 0%, #d9fbe8 100%)\`,
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
+  {
+    id: "gradient-peach-satin",
+    name: "Peach Satin",
+    category: "gradients",
+    badge: "New",
+    style: {
+      background: "#fff3eb",
+      backgroundImage: `radial-gradient(circle at 10% 90%, rgba(255, 222, 200, 0.7), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 236, 210, 0.6), transparent 60%),
+        linear-gradient(160deg, #fff3eb 0%, #ffe2d1 70%, #fdf0e6 100%)`,
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#fff3eb] relative">
+  {/* Peach Satin Background */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 10% 90%, rgba(255, 222, 200, 0.7), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 236, 210, 0.6), transparent 60%),
+        linear-gradient(160deg, #fff3eb 0%, #ffe2d1 70%, #fdf0e6 100%)\`,
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
+  {
+    id: "gradient-powder-sky",
+    name: "Powder Sky",
+    category: "gradients",
+    badge: "New",
+    style: {
+      background: "#f4f9ff",
+      backgroundImage: `radial-gradient(circle at 60% 20%, rgba(173, 216, 255, 0.65), transparent 45%),
+        radial-gradient(circle at 20% 80%, rgba(196, 231, 255, 0.5), transparent 50%),
+        linear-gradient(180deg, #f4f9ff 0%, #eaf2ff 100%)`,
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#f4f9ff] relative">
+  {/* Powder Sky Background */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 60% 20%, rgba(173, 216, 255, 0.65), transparent 45%),
+        radial-gradient(circle at 20% 80%, rgba(196, 231, 255, 0.5), transparent 50%),
+        linear-gradient(180deg, #f4f9ff 0%, #eaf2ff 100%)\`,
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
 ];
