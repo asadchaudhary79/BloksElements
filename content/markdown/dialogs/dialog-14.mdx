@@ -1,0 +1,114 @@
+````tsx
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
+import { Copy, KeyRound, RefreshCw } from "lucide-react";
+import { useState } from "react";
+
+const scopes = [
+  { id: "read", label: "Read data" },
+  { id: "write", label: "Write data" },
+  { id: "billing", label: "Billing" },
+];
+
+export default function Dialog14() {
+  const [open, setOpen] = useState(true);
+  const [apiKey] = useState("pk_live_7df3a6ef-613b-45a5");
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" className="gap-2">
+          <KeyRound className="size-4" /> Manage API key
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>API key management</DialogTitle>
+          <DialogDescription>
+            Rotate your API key and control the scopes it can access.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="api-key">Current key</Label>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex-1">
+                <Input
+                  id="api-key"
+                  value={apiKey}
+                  readOnly
+                  className="font-mono"
+                />
+              </div>
+              <div className="flex gap-2 sm:flex-col">
+                <Button variant="outline" size="icon" className="flex-1 sm:flex">
+                  <Copy className="size-4" />
+                </Button>
+                <Button variant="outline" size="icon" className="flex-1 sm:flex">
+                  <RefreshCw className="size-4" />
+                </Button>
+              </div>
+            </div>
+            <Badge variant="secondary" className="w-fit">
+              Last rotated 2 days ago
+            </Badge>
+          </div>
+
+          <div className="space-y-4 rounded-lg border p-4">
+            <div>
+              <h4 className="text-sm font-medium">Scopes</h4>
+              <p className="text-xs text-muted-foreground">
+                Toggle the access this key should have.
+              </p>
+            </div>
+            <div className="space-y-3">
+              {scopes.map((scope) => (
+                <div
+                  key={scope.id}
+                  className="flex items-center justify-between text-sm"
+                >
+                  <div>
+                    <p className="font-medium text-foreground">{scope.label}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {scope.id === "billing"
+                        ? "Manage invoices and usage"
+                        : scope.id === "write"
+                          ? "Create and update resources"
+                          : "View resources and activity"}
+                    </p>
+                  </div>
+                  <Switch defaultChecked={scope.id !== "billing"} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter className="gap-2 sm:justify-end">
+          <DialogClose asChild>
+            <Button variant="ghost">Close</Button>
+          </DialogClose>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+````
+

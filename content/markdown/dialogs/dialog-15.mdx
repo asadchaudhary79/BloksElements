@@ -1,0 +1,93 @@
+```tsx
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+
+export default function Dialog15() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">RSVP</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Team offsite RSVP</DialogTitle>
+          <DialogDescription>
+            Let us know if you will be able to attend our yearly offsite in
+            Lisbon.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">Your name</Label>
+            <Input id="name" placeholder="Asad Chaudhary" />
+          </div>
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">Attendance</Label>
+            <RadioGroup defaultValue="yes" className="space-y-1.5">
+              <Label className="flex items-center justify-between rounded-lg border px-3 py-2">
+                <div className="space-y-0.5">
+                  <span className="font-medium">Yes, count me in</span>
+                  <p className="text-xs text-muted-foreground">
+                    I can join the sessions onsite
+                  </p>
+                </div>
+                <RadioGroupItem value="yes" />
+              </Label>
+              <Label className="flex items-center justify-between rounded-lg border px-3 py-2">
+                <div className="space-y-0.5">
+                  <span className="font-medium">Joining virtually</span>
+                  <p className="text-xs text-muted-foreground">
+                    I&apos;ll follow remotely
+                  </p>
+                </div>
+                <RadioGroupItem value="virtual" />
+              </Label>
+              <Label className="flex items-center justify-between rounded-lg border px-3 py-2">
+                <div className="space-y-0.5">
+                  <span className="font-medium">Can&apos;t attend</span>
+                  <p className="text-xs text-muted-foreground">
+                    Something else came up
+                  </p>
+                </div>
+                <RadioGroupItem value="no" />
+              </Label>
+            </RadioGroup>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="notes">Dietary restrictions / notes</Label>
+            <Textarea
+              id="notes"
+              placeholder="Let us know if you have any special requirements..."
+              className="min-h-[100px]"
+            />
+          </div>
+        </div>
+        <DialogFooter className="gap-2 sm:justify-end">
+          <DialogClose asChild>
+            <Button variant="ghost">Skip for now</Button>
+          </DialogClose>
+          <Button type="submit">Submit RSVP</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```

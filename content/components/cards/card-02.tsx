@@ -1,0 +1,78 @@
+"use client";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, MapPin, Users } from "lucide-react";
+
+export default function Card02() {
+  return (
+    <div className="flex items-center justify-center p-10">
+      <Card className="w-full max-w-md overflow-hidden">
+        <div className="h-48 bg-linear-to-br from-emerald-500 to-teal-600" />
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle>Team Building Event</CardTitle>
+              <CardDescription className="mt-1">
+                Join us for an exciting team building activity
+              </CardDescription>
+            </div>
+            <Badge variant="secondary">Upcoming</Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Calendar className="h-4 w-4" />
+            <span>March 15, 2024 at 2:00 PM</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            <span>Central Park, New York</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Users className="h-4 w-4" />
+            <span>12 people attending</span>
+          </div>
+        </CardContent>
+        <CardFooter className="flex items-center justify-between border-t pt-4">
+          <div className="flex -space-x-2">
+            <Avatar className="h-8 w-8 border-2 border-background">
+              <AvatarImage
+                src="https://blockselements.co/avatar-01.png"
+                alt="User 1"
+              />
+              <AvatarFallback>AC</AvatarFallback>
+            </Avatar>
+            <Avatar className="h-8 w-8 border-2 border-background">
+              <AvatarImage
+                src="https://blockselements.co/avatar-02.jpg"
+                alt="User 2"
+              />
+              <AvatarFallback>LS</AvatarFallback>
+            </Avatar>
+            <Avatar className="h-8 w-8 border-2 border-background">
+              <AvatarImage
+                src="https://blockselements.co/avatar-03.png"
+                alt="User 3"
+              />
+              <AvatarFallback>TE</AvatarFallback>
+            </Avatar>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-muted text-xs font-medium">
+              +9
+            </div>
+          </div>
+          <Button size="sm">RSVP</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}

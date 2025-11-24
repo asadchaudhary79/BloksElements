@@ -4,6 +4,7 @@ import { LoginThumbnail } from "@/components/thumbnails/login";
 import { StatsThumbnail } from "@/components/thumbnails/stats";
 
 import { AIThumbnail } from "@/components/thumbnails/ai";
+import { CardsThumbnail } from "@/components/thumbnails/cards";
 import { DialogThumbnail } from "@/components/thumbnails/dialog";
 import { SidebarThumbnail } from "@/components/thumbnails/sidebar";
 import { blocksMetadata } from "./blocks-metadata";
@@ -96,7 +97,14 @@ const preblocksCategoriesMetadata: Omit<BlocksCategoryMetadata, "count">[] = [
     name: "Tables",
     thumbnail: TablesThumbnail,
     hasCharts: false,
-  },];
+  },
+  {
+    id: categoryIds.Cards,
+    name: "Cards",
+    thumbnail: CardsThumbnail,
+    hasCharts: false,
+  },
+];
 
 export const blocksCategoriesMetadata = initializeAndUpdateCategories().sort(
   (a, b) => a.name.localeCompare(b.name)

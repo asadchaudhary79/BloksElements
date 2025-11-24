@@ -10,3 +10,6 @@ export { default as Dialog09 } from "./dialog-09";
 export { default as Dialog10 } from "./dialog-10";
 export { default as Dialog11 } from "./dialog-11";
 export { default as Dialog12 } from "./dialog-12";
+export { default as Dialog13 } from "./dialog-13";
+export { default as Dialog14 } from "./dialog-14";
+export { default as Dialog15 } from "./dialog-15";

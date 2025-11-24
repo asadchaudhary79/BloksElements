@@ -1,0 +1,100 @@
+```tsx
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import { Star } from "lucide-react";
+import { useState } from "react";
+
+const ratings = [1, 2, 3, 4, 5];
+
+export default function Dialog13() {
+  const [open, setOpen] = useState(true);
+  const [selectedRating, setSelectedRating] = useState<number | null>(4);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">Leave feedback</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Share your feedback</DialogTitle>
+          <DialogDescription>
+            Tell us how your experience has been so far. Your feedback helps us
+            improve.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-5 py-2">
+          <div className="space-y-3">
+            <Label className="text-sm font-medium text-foreground">
+              How satisfied are you with Blocks Elements?
+            </Label>
+            <div className="flex items-center gap-3">
+              {ratings.map((rating) => (
+                <button
+                  key={rating}
+                  type="button"
+                  onClick={() => setSelectedRating(rating)}
+                  className={cn(
+                    "relative flex size-12 items-center justify-center rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    rating <= (selectedRating ?? 0)
+                      ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-500"
+                      : "border-border text-muted-foreground hover:border-emerald-500/40 hover:text-emerald-500"
+                  )}
+                  aria-label={`Rate ${rating} star${rating > 1 ? "s" : ""}`}
+                >
+                  <Star
+                    className={cn(
+                      "size-5",
+                      rating <= (selectedRating ?? 0)
+                        ? "fill-emerald-500 text-emerald-500"
+                        : "text-muted-foreground"
+                    )}
+                  />
+                  <span className="absolute -bottom-6 text-xs font-medium text-muted-foreground">
+                    {rating}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="feedback" className="text-sm font-medium">
+              Anything else you would like us to know?
+            </Label>
+            <Textarea
+              id="feedback"
+              placeholder="Feature requests, bugs, shout-outs... whatever is on your mind."
+              className="min-h-[120px]"
+            />
+          </div>
+        </div>
+
+        <DialogFooter className="sm:justify-end gap-2">
+          <DialogClose asChild>
+            <Button variant="ghost">Maybe later</Button>
+          </DialogClose>
+          <Button type="submit" className="gap-2">
+            Submit feedback
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```

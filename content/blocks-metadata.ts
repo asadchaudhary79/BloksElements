@@ -335,6 +335,27 @@ export const blocksMetadata: BlocksMetadata[] = [
     iframeHeight: "650px",
     type: "file",
   },
+  {
+    id: "dialog-13",
+    category: categoryIds.Dialogs,
+    name: "Dialog Feedback Survey",
+    iframeHeight: "580px",
+    type: "file",
+  },
+  {
+    id: "dialog-14",
+    category: categoryIds.Dialogs,
+    name: "Dialog API Key Management",
+    iframeHeight: "600px",
+    type: "file",
+  },
+  {
+    id: "dialog-15",
+    category: categoryIds.Dialogs,
+    name: "Dialog Event RSVP",
+    iframeHeight: "520px",
+    type: "file",
+  },
 
   {
     id: "sidebar-01",
@@ -434,6 +455,28 @@ export const blocksMetadata: BlocksMetadata[] = [
     category: categoryIds.Tables,
     name: "Table with Actions",
     iframeHeight: "600px",
+    type: "file",
+  },
+
+  {
+    id: "card-01",
+    category: categoryIds.Cards,
+    name: "Card with Actions",
+    iframeHeight: "400px",
+    type: "file",
+  },
+  {
+    id: "card-02",
+    category: categoryIds.Cards,
+    name: "Event Card with Image",
+    iframeHeight: "600px",
+    type: "file",
+  },
+  {
+    id: "card-03",
+    category: categoryIds.Cards,
+    name: "Stats Cards Grid",
+    iframeHeight: "300px",
     type: "file",
   },
 ];

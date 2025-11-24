@@ -53,6 +53,9 @@ export const blocksComponents: { [blocksId: string]: React.ElementType } = {
   "dialog-10": components.Dialog10,
   "dialog-11": components.Dialog11,
   "dialog-12": components.Dialog12,
+  "dialog-13": components.Dialog13,
+  "dialog-14": components.Dialog14,
+  "dialog-15": components.Dialog15,
 
   "sidebar-01": components.Sidebar01,
   "sidebar-02": components.Sidebar02,
@@ -70,4 +73,8 @@ export const blocksComponents: { [blocksId: string]: React.ElementType } = {
 
   "table-01": components.Table01,
   "table-02": components.Table02,
+
+  "card-01": components.Card01,
+  "card-02": components.Card02,
+  "card-03": components.Card03,
 };
