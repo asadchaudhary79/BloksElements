@@ -33,6 +33,7 @@ import {
   IconChevronRight,
   IconCode,
   IconCopy,
+  IconDeviceDesktopCode,
   IconFileCode,
   IconFolder,
   IconRocket,
@@ -43,6 +44,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useCopyToClipboard } from "@/hooks/use-copy";
 import Link from "next/link";
 import { siteConfig } from "@/config";
+import { CodePlayground } from "./_components/code-playground";
 
 const sampleFileTree: FileTreeItem[] = [
   {
@@ -94,6 +96,12 @@ const sidebarNavItems = [
     label: "Code Editor",
     hint: "Interactive file tree playground",
     icon: IconCode,
+  },
+  {
+    id: "playground",
+    label: "Playground",
+    hint: "Live HTML + CSS + JS",
+    icon: IconDeviceDesktopCode,
   },
   {
     id: "blocks",
@@ -453,6 +461,27 @@ export default function DocsPage() {
                     <CodeBlockEditor fileTree={sampleFileTree} />
                   </CardContent>
                 </Card>
+              </div>
+            )}
+
+            {activeTab === "playground" && (
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <Badge variant="secondary" className="w-fit">
+                    Live Playground
+                  </Badge>
+                  <div>
+                    <h1 className="text-4xl font-bold tracking-tight mb-2">
+                      Code Playground
+                    </h1>
+                    <p className="text-muted-foreground text-lg max-w-2xl">
+                      Write HTML, CSS, and JavaScript with instant preview.
+                      Perfect for testing Tailwind snippets, pattern ideas, or
+                      onboarding teammates without leaving the docs.
+                    </p>
+                  </div>
+                </div>
+                <CodePlayground />
               </div>
             )}
 
