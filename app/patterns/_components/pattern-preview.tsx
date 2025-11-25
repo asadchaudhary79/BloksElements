@@ -2,7 +2,12 @@
 
 import { siteConfig } from "@/config";
 import type { Pattern } from "@/types/pattern";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconHeart,
+  IconHeartFilled,
+} from "@tabler/icons-react";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PatternCopyButton } from "./pattern-copy-button";
 import { useMemo } from "react";
+import { cn } from "@/lib/utils";
 
 interface PatternPreviewProps {
   pattern: Pattern;
@@ -20,6 +26,8 @@ interface PatternPreviewProps {
   onOpenChange: (open: boolean) => void;
   onNext: () => void;
   onPrev: () => void;
+  isBookmarked: boolean;
+  onToggleBookmark: () => void;
 }
 
 // Function to detect if pattern has a light background
@@ -48,6 +56,8 @@ export function PatternPreview({
   onOpenChange,
   onNext,
   onPrev,
+  isBookmarked,
+  onToggleBookmark,
 }: PatternPreviewProps) {
   const isLight = useMemo(() => isLightPattern(pattern), [pattern]);
   
@@ -93,6 +103,24 @@ export function PatternPreview({
                   <IconChevronRight className="inline size-4 ml-1" />
                 </button>
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                aria-pressed={isBookmarked}
+                onClick={onToggleBookmark}
+                className={cn(
+                  "rounded-full border-dotted",
+                  isBookmarked &&
+                    "border-emerald-500/40 text-emerald-600 bg-emerald-500/10"
+                )}
+              >
+                {isBookmarked ? (
+                  <IconHeartFilled className="mr-2 size-4" />
+                ) : (
+                  <IconHeart className="mr-2 size-4" />
+                )}
+                {isBookmarked ? "Bookmarked" : "Bookmark"}
+              </Button>
               <PatternCopyButton
                 variant="outline"
                 size="sm"

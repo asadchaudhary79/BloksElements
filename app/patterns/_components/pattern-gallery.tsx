@@ -2,7 +2,12 @@
 
 import type { KeyboardEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { IconGridDots, IconEye } from "@tabler/icons-react";
+import {
+  IconGridDots,
+  IconEye,
+  IconHeart,
+  IconHeartFilled,
+} from "@tabler/icons-react";
 
 import type { Pattern } from "@/types/pattern";
 import { Input } from "@/components/ui/input";
@@ -11,29 +16,57 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PatternPreview } from "./pattern-preview";
 import { PatternCopyButton } from "./pattern-copy-button";
+import { usePatternBookmarks } from "@/hooks/use-pattern-bookmarks";
+import Link from "next/link";
 
 interface PatternGalleryProps {
   patterns: Pattern[];
+  initialCategory?: string;
+  hideCategoryFilters?: boolean;
+  showBookmarkButton?: boolean;
 }
 
-export function PatternGallery({ patterns }: PatternGalleryProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+export function PatternGallery({
+  patterns,
+  initialCategory = "all",
+  hideCategoryFilters = false,
+  showBookmarkButton = true,
+}: PatternGalleryProps) {
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(initialCategory);
   const [query, setQuery] = useState("");
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const { bookmarkedIds, toggleBookmark, isBookmarked } =
+    usePatternBookmarks();
 
-  const categories = useMemo(() => {
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
+
+  const baseCategories = useMemo(() => {
     const unique = Array.from(
       new Set(patterns.map((pattern) => pattern.category))
     );
     return ["all", ...unique];
   }, [patterns]);
 
+  const hasBookmarks = bookmarkedIds.length > 0;
+
+  const categories = useMemo(() => {
+    if (hasBookmarks) {
+      return ["bookmarked", ...baseCategories];
+    }
+    return baseCategories;
+  }, [baseCategories, hasBookmarks]);
+
   const filteredPatterns = useMemo(() => {
     return patterns.filter((pattern) => {
       const matchesCategory =
         selectedCategory === "all" ||
-        pattern.category.toLowerCase() === selectedCategory.toLowerCase();
+        (selectedCategory === "bookmarked"
+          ? bookmarkedIds.includes(pattern.id)
+          : pattern.category.toLowerCase() === selectedCategory.toLowerCase());
       const matchesQuery =
         !query.trim() ||
         pattern.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -41,7 +74,7 @@ export function PatternGallery({ patterns }: PatternGalleryProps) {
         pattern.description?.toLowerCase().includes(query.toLowerCase());
       return matchesCategory && matchesQuery;
     });
-  }, [patterns, query, selectedCategory]);
+  }, [patterns, query, selectedCategory, bookmarkedIds]);
 
   useEffect(() => {
     if (
@@ -91,26 +124,46 @@ export function PatternGallery({ patterns }: PatternGalleryProps) {
             className="h-11 rounded-full border-dotted bg-background/60 backdrop-blur-sm"
           />
         </div>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setSelectedCategory(category)}
-              className={cn(
-                "rounded-full border border-dotted px-4 py-1.5 text-sm transition-all",
-                selectedCategory === category
-                  ? "bg-foreground text-background shadow-lg shadow-emerald-500/20"
-                  : "bg-background/50 text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {category === "all"
-                ? "All"
-                : category.charAt(0).toUpperCase() + category.slice(1)}
-            </button>
-          ))}
-        </div>
+        {!hideCategoryFilters ? (
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                className={cn(
+                  "rounded-full border border-dotted px-4 py-1.5 text-sm transition-all",
+                  selectedCategory === category
+                    ? "bg-foreground text-background shadow-lg shadow-emerald-500/20"
+                    : "bg-background/50 text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {category === "all"
+                  ? "All"
+                  : category === "bookmarked"
+                    ? "Bookmarks"
+                    : category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
+      {showBookmarkButton ? (
+        <div className="flex justify-end">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="rounded-full border-dotted"
+          >
+            <Link href="/patterns/bookmarks">
+              <IconHeart className="mr-2 size-4" />
+              Saved patterns
+              {hasBookmarks ? ` (${bookmarkedIds.length})` : ""}
+            </Link>
+          </Button>
+        </div>
+      ) : null}
 
       {filteredPatterns.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-3xl border border-dotted p-12 text-center">
@@ -128,6 +181,8 @@ export function PatternGallery({ patterns }: PatternGalleryProps) {
               key={pattern.id}
               pattern={pattern}
               onPreview={() => openPreview(index)}
+              isBookmarked={isBookmarked(pattern.id)}
+              onToggleBookmark={() => toggleBookmark(pattern.id)}
             />
           ))}
         </div>
@@ -145,6 +200,11 @@ export function PatternGallery({ patterns }: PatternGalleryProps) {
           }}
           onNext={handleNext}
           onPrev={handlePrev}
+          isBookmarked={previewPattern ? isBookmarked(previewPattern.id) : false}
+          onToggleBookmark={() => {
+            if (!previewPattern) return;
+            toggleBookmark(previewPattern.id);
+          }}
         />
       ) : null}
     </section>
@@ -154,9 +214,13 @@ export function PatternGallery({ patterns }: PatternGalleryProps) {
 function PatternCard({
   pattern,
   onPreview,
+  isBookmarked,
+  onToggleBookmark,
 }: {
   pattern: Pattern;
   onPreview: () => void;
+  isBookmarked: boolean;
+  onToggleBookmark: () => void;
 }) {
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter" || event.key === " ") {
@@ -172,7 +236,11 @@ function PatternCard({
       aria-label={`Preview ${pattern.name}`}
       onClick={onPreview}
       onKeyDown={handleKeyDown}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-dotted border-border/70 bg-background/70 shadow-[0_20px_80px_rgba(0,0,0,0.05)] backdrop-blur cursor-pointer transition hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
+      className={cn(
+        "group relative flex flex-col overflow-hidden rounded-3xl border border-dotted border-border/70 bg-background/70 shadow-[0_20px_80px_rgba(0,0,0,0.05)] backdrop-blur cursor-pointer transition hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60",
+        isBookmarked &&
+          "border-emerald-400/60 shadow-[0_25px_60px_rgba(16,185,129,0.2)]"
+      )}
     >
       <div className="relative h-56 overflow-hidden border-b border-dotted">
         <div
@@ -190,6 +258,26 @@ function PatternCard({
         >
           <IconEye className="mr-1.5 inline size-3.5" />
           Preview
+        </button>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            onToggleBookmark();
+          }}
+          aria-pressed={isBookmarked}
+          className={cn(
+            "absolute top-3 left-3 z-10 flex items-center justify-center rounded-full border border-white/20 bg-background/80 p-1.5 text-foreground transition hover:bg-background/90",
+            isBookmarked && "border-emerald-400/60 text-emerald-500"
+          )}
+        >
+          {isBookmarked ? (
+            <IconHeartFilled className="size-4" />
+          ) : (
+            <IconHeart className="size-4" />
+          )}
+          <span className="sr-only">
+            {isBookmarked ? "Remove bookmark" : "Bookmark pattern"}
+          </span>
         </button>
       </div>
 
@@ -218,6 +306,14 @@ function PatternCard({
                 className="bg-emerald-500/20 text-emerald-600"
               >
                 {pattern.badge}
+              </Badge>
+            ) : null}
+            {isBookmarked ? (
+              <Badge
+                variant="outline"
+                className="rounded-full border-emerald-500/40 text-emerald-500"
+              >
+                Bookmarked
               </Badge>
             ) : null}
           </div>
