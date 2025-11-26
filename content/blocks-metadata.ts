@@ -442,6 +442,20 @@ export const blocksMetadata: BlocksMetadata[] = [
     iframeHeight: "800px",
     type: "file",
   },
+  {
+    id: "ai-07",
+    category: categoryIds.AI,
+    name: "AI Chatbot Interface",
+    iframeHeight: "600px",
+    type: "file",
+  },
+  {
+    id: "ai-08",
+    category: categoryIds.AI,
+    name: "Floating Chatbot Widget",
+    iframeHeight: "700px",
+    type: "file",
+  },
 
   {
     id: "table-01",

@@ -44,14 +44,24 @@ export interface RegistryBlockConfig {
 }
 
 export const registryBlocks: RegistryBlockConfig[] = [
-  // Example:
-  // {
-  //   id: "ai-05",
-  //   title: "AI Style Lab Chat Panel",
-  //   description: "A chat panel for AI moodboard generation.",
-  //   componentPath: "content/components/ai/ai-05.tsx",
-  //   categories: ["ai"],
-  //   registryDependencies: ["avatar", "badge", "button"],
-  //   dependencies: ["@tabler/icons-react"],
-  // },
+  {
+    id: "ai-07",
+    title: "AI Chatbot Interface",
+    description:
+      "A clean and professional AI chatbot interface with message bubbles, typing indicators, and auto-scroll functionality.",
+    componentPath: "content/components/ai/ai-07.tsx",
+    categories: ["ai"],
+    registryDependencies: ["avatar", "button", "scroll-area", "textarea"],
+    dependencies: ["@tabler/icons-react"],
+  },
+  {
+    id: "ai-08",
+    title: "Floating Chatbot Widget",
+    description:
+      "A floating chatbot widget with a button in the bottom-right corner that opens a chat panel on click. Includes minimize and close functionality.",
+    componentPath: "content/components/ai/ai-08.tsx",
+    categories: ["ai"],
+    registryDependencies: ["avatar", "button", "scroll-area", "textarea"],
+    dependencies: ["@tabler/icons-react"],
+  },
 ];

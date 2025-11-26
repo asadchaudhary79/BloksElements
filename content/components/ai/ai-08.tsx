@@ -1,0 +1,317 @@
+"use client";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import {
+  IconArrowUp,
+  IconMicrophone,
+  IconMinus,
+  IconPaperclip,
+  IconRobot,
+  IconX,
+} from "@tabler/icons-react";
+import { useEffect, useRef, useState } from "react";
+
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: Date;
+}
+
+const INITIAL_MESSAGES: Message[] = [
+  {
+    id: "1",
+    role: "assistant",
+    content: "Hello! I'm your AI assistant. How can I help you today?",
+    timestamp: new Date(Date.now() - 300000),
+  },
+];
+
+export default function Ai08() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen && !isMinimized) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isTyping, isOpen, isMinimized]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isTyping) return;
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: input.trim(),
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsTyping(true);
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+
+    // Simulate AI response
+    setTimeout(() => {
+      const aiResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: `I understand you're asking about "${userMessage.content}". This is a simulated response. In a real implementation, you would connect this to your AI service API.`,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, aiResponse]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as any);
+    }
+  };
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${Math.min(
+        textareaRef.current.scrollHeight,
+        120
+      )}px`;
+    }
+  };
+
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+    setIsMinimized(false);
+  };
+
+  const minimizeChat = () => {
+    setIsMinimized(true);
+  };
+
+  const closeChat = () => {
+    setIsOpen(false);
+    setIsMinimized(false);
+  };
+
+  return (
+    <>
+      {/* Floating Chat Button */}
+      {!isOpen && (
+        <Button
+          onClick={toggleChat}
+          size="lg"
+          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+        >
+          <IconRobot className="h-6 w-6" />
+          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-xs text-white">
+            1
+          </span>
+        </Button>
+      )}
+
+      {/* Chat Panel */}
+      {isOpen && (
+        <div
+          className={cn(
+            "fixed bottom-6 right-6 z-50 flex flex-col rounded-2xl border border-border bg-card shadow-2xl transition-all duration-300",
+            isMinimized
+              ? "h-16 w-80"
+              : "h-[600px] w-[400px] md:w-[450px]"
+          )}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-border px-4 py-3 bg-muted/30">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <IconRobot className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">AI Chatbot</h3>
+                {!isMinimized && (
+                  <p className="text-xs text-muted-foreground">
+                    {isTyping ? "Typing..." : "Online"}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {!isMinimized && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={minimizeChat}
+                >
+                  <IconMinus className="h-4 w-4" />
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={closeChat}
+              >
+                <IconX className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {!isMinimized && (
+            <>
+              {/* Messages Area */}
+              <ScrollArea className="flex-1 min-h-0">
+                <div className="flex flex-col gap-4 px-4 py-4">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={cn(
+                        "flex gap-3",
+                        message.role === "user" ? "justify-end" : "justify-start"
+                      )}
+                    >
+                      {message.role === "assistant" && (
+                        <Avatar className="h-8 w-8 shrink-0">
+                          <AvatarFallback className="bg-primary/10 text-primary">
+                            <IconRobot className="h-4 w-4" />
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+
+                      <div
+                        className={cn(
+                          "flex max-w-[75%] flex-col gap-1.5",
+                          message.role === "user" && "items-end"
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "rounded-2xl px-4 py-2.5",
+                            message.role === "user"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-muted text-foreground"
+                          )}
+                        >
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                            {message.content}
+                          </p>
+                        </div>
+                        <span className="text-xs text-muted-foreground px-1">
+                          {message.timestamp.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      </div>
+
+                      {message.role === "user" && (
+                        <Avatar className="h-8 w-8 shrink-0">
+                          <AvatarFallback className="bg-muted">U</AvatarFallback>
+                        </Avatar>
+                      )}
+                    </div>
+                  ))}
+
+                  {isTyping && (
+                    <div className="flex gap-3 justify-start">
+                      <Avatar className="h-8 w-8 shrink-0">
+                        <AvatarFallback className="bg-primary/10 text-primary">
+                          <IconRobot className="h-4 w-4" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex max-w-[75%] flex-col gap-1.5">
+                        <div className="rounded-2xl bg-muted px-4 py-2.5">
+                          <div className="flex gap-1">
+                            <div className="h-2 w-2 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:-0.3s]"></div>
+                            <div className="h-2 w-2 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:-0.15s]"></div>
+                            <div className="h-2 w-2 rounded-full bg-muted-foreground/50 animate-bounce"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+              </ScrollArea>
+
+              {/* Input Area */}
+              <div className="border-t border-border p-4">
+                <form onSubmit={handleSubmit} className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute left-2 top-1/2 h-7 w-7 -translate-y-1/2 rounded-full"
+                    >
+                      <IconPaperclip className="h-4 w-4 text-muted-foreground" />
+                    </Button>
+                    <Textarea
+                      ref={textareaRef}
+                      value={input}
+                      onChange={handleTextareaChange}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Type your message..."
+                      className="min-h-[44px] max-h-[120px] resize-none rounded-xl border-border bg-background pl-10 pr-20 text-sm"
+                      rows={1}
+                      disabled={isTyping}
+                    />
+                    <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-1">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 rounded-full"
+                        disabled={isTyping}
+                      >
+                        <IconMicrophone className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                      <Button
+                        type="submit"
+                        size="icon"
+                        className="h-7 w-7 rounded-full"
+                        disabled={!input.trim() || isTyping}
+                      >
+                        <IconArrowUp className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </>
+          )}
+
+          {isMinimized && (
+            <div className="flex items-center justify-between px-4">
+              <p className="text-sm text-muted-foreground">Chat minimized</p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMinimized(false)}
+              >
+                Restore
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  );
+}
+

@@ -1,6 +1,5 @@
 import "@/app/globals.css";
-import { Header } from "@/components/layouts/header";
-import { Footer } from "@/components/layouts/footer";
+
 import Script from "next/script";
 
 export default function BlocksLayout({
@@ -10,7 +9,6 @@ export default function BlocksLayout({
 }>) {
   return (
     <div className="flex min-h-screen flex-col relative z-10">
-      <Header />
       <div className="flex flex-1 flex-col">
         <div className="mx-auto w-full max-w-(--breakpoint-xl) flex-1 border-border border-r border-l border-dotted px-8">
           <div className="min-h-[calc(100%-2rem)] w-full pt-10 pb-20">
@@ -18,7 +16,6 @@ export default function BlocksLayout({
           </div>
         </div>
       </div>
-      <Footer />
 
       {process.env.NODE_ENV === "production" && (
         <Script

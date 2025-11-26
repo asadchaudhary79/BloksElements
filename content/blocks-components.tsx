@@ -70,6 +70,8 @@ export const blocksComponents: { [blocksId: string]: React.ElementType } = {
   "ai-04": components.Ai04,
   "ai-05": components.Ai05,
   "ai-06": components.Ai06,
+  "ai-07": components.Ai07,
+  "ai-08": components.Ai08,
 
   "table-01": components.Table01,
   "table-02": components.Table02,
