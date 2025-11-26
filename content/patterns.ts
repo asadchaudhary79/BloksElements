@@ -1565,4 +1565,309 @@ export const gridPatterns: Pattern[] = [
   {/* Content */}
 </div>`,
   },
+  {
+    id: "pattern-dot-matrix",
+    name: "Dot Matrix",
+    category: "patterns",
+    badge: "New",
+    description: "Dark dot matrix pattern with glowing dots",
+    style: {
+      background: "#000000",
+      backgroundImage: `radial-gradient(circle at 2px 2px, rgba(99, 102, 241, 0.4) 1px, transparent 0),
+        radial-gradient(circle at 2px 2px, rgba(139, 92, 246, 0.3) 1px, transparent 0)`,
+      backgroundSize: "40px 40px, 80px 80px",
+      backgroundPosition: "0 0, 20px 20px",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-black relative overflow-hidden">
+  {/* Dot Matrix Pattern */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 2px 2px, rgba(99, 102, 241, 0.4) 1px, transparent 0),
+        radial-gradient(circle at 2px 2px, rgba(139, 92, 246, 0.3) 1px, transparent 0)\`,
+      backgroundSize: "40px 40px, 80px 80px",
+      backgroundPosition: "0 0, 20px 20px",
+      backgroundColor: "#000000",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "pattern-diagonal-stripes",
+    name: "Diagonal Stripes",
+    category: "patterns",
+    badge: "New",
+    description: "Dark diagonal stripe pattern with subtle gradient",
+    style: {
+      background: "#020617",
+      backgroundImage: `repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(99, 102, 241, 0.03) 10px,
+        rgba(99, 102, 241, 0.03) 20px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(139, 92, 246, 0.03) 10px,
+        rgba(139, 92, 246, 0.03) 20px
+      )`,
+      backgroundSize: "100% 100%",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#020617] relative overflow-hidden">
+  {/* Diagonal Stripes Pattern */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(99, 102, 241, 0.03) 10px,
+        rgba(99, 102, 241, 0.03) 20px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(139, 92, 246, 0.03) 10px,
+        rgba(139, 92, 246, 0.03) 20px
+      )\`,
+      backgroundSize: "100% 100%",
+      backgroundColor: "#020617",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "pattern-circuit-board",
+    name: "Circuit Board",
+    category: "patterns",
+    badge: "New",
+    description: "Dark circuit board pattern with glowing nodes",
+    style: {
+      background: "#0a0a0f",
+      backgroundImage: `linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 0px 0px, rgba(16, 185, 129, 0.6) 2px, transparent 2px),
+        radial-gradient(circle at 50px 50px, rgba(59, 130, 246, 0.5) 2px, transparent 2px),
+        radial-gradient(circle at 100px 0px, rgba(139, 92, 246, 0.5) 2px, transparent 2px)`,
+      backgroundSize:
+        "100px 100px, 100px 100px, 100px 100px, 100px 100px, 100px 100px",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#0a0a0f] relative overflow-hidden">
+  {/* Circuit Board Pattern */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 0px 0px, rgba(16, 185, 129, 0.6) 2px, transparent 2px),
+        radial-gradient(circle at 50px 50px, rgba(59, 130, 246, 0.5) 2px, transparent 2px),
+        radial-gradient(circle at 100px 0px, rgba(139, 92, 246, 0.5) 2px, transparent 2px)\`,
+      backgroundSize: "100px 100px, 100px 100px, 100px 100px, 100px 100px, 100px 100px",
+      backgroundColor: "#0a0a0f",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "pattern-mesh-gradient",
+    name: "Mesh Gradient",
+    category: "patterns",
+    badge: "New",
+    description:
+      "Professional dark mesh gradient pattern with smooth color transitions",
+    style: {
+      background: "#000000",
+      backgroundImage: `radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.08) 0px, transparent 50%)`,
+      backgroundSize: "100% 100%",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-black relative overflow-hidden">
+  {/* Mesh Gradient Pattern */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.08) 0px, transparent 50%)\`,
+      backgroundSize: "100% 100%",
+      backgroundColor: "#000000",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "pattern-noise-texture",
+    name: "Noise Texture",
+    category: "patterns",
+    badge: "New",
+    description:
+      "Professional dark noise texture pattern with subtle grain effect",
+    style: {
+      background: "#020617",
+      backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0),
+        radial-gradient(circle at 2px 2px, rgba(99, 102, 241, 0.02) 1px, transparent 0),
+        radial-gradient(circle at 3px 3px, rgba(139, 92, 246, 0.02) 1px, transparent 0)`,
+      backgroundSize: "4px 4px, 8px 8px, 12px 12px",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#020617] relative overflow-hidden">
+  {/* Noise Texture Pattern */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0),
+        radial-gradient(circle at 2px 2px, rgba(99, 102, 241, 0.02) 1px, transparent 0),
+        radial-gradient(circle at 3px 3px, rgba(139, 92, 246, 0.02) 1px, transparent 0)\`,
+      backgroundSize: "4px 4px, 8px 8px, 12px 12px",
+      backgroundColor: "#020617",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "pattern-wireframe",
+    name: "Wireframe",
+    category: "patterns",
+    badge: "New",
+    description:
+      "Professional dark wireframe pattern with clean geometric lines",
+    style: {
+      background: "#000000",
+      backgroundImage: `linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px)`,
+      backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-black relative overflow-hidden">
+  {/* Wireframe Pattern */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px)\`,
+      backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
+      backgroundColor: "#000000",
+    }}
+  />
+  {/* Content */}
+</div>`,
+  },
+  {
+    id: "gradient-orbital-rings",
+    name: "Orbital Rings",
+    category: "gradients",
+    badge: "New",
+    description: "Dark background with concentric circular gradient rings",
+    style: {
+      background: "#020617",
+      backgroundImage: `
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 15%, rgba(59, 130, 246, 0.15) 15%, rgba(59, 130, 246, 0.15) 18%, transparent 18%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 25%, rgba(139, 92, 246, 0.12) 25%, rgba(139, 92, 246, 0.12) 27%, transparent 27%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 35%, rgba(236, 72, 153, 0.1) 35%, rgba(236, 72, 153, 0.1) 37%, transparent 37%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 45%, rgba(16, 185, 129, 0.08) 45%, rgba(16, 185, 129, 0.08) 47%, transparent 47%),
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.15) 8%, transparent 12%)
+      `,
+      backgroundSize: "100% 100%",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-[#020617] relative overflow-hidden">
+  {/* Orbital Rings Gradient */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 15%, rgba(59, 130, 246, 0.15) 15%, rgba(59, 130, 246, 0.15) 18%, transparent 18%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 25%, rgba(139, 92, 246, 0.12) 25%, rgba(139, 92, 246, 0.12) 27%, transparent 27%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 35%, rgba(236, 72, 153, 0.1) 35%, rgba(236, 72, 153, 0.1) 37%, transparent 37%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 45%, rgba(16, 185, 129, 0.08) 45%, rgba(16, 185, 129, 0.08) 47%, transparent 47%),
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.15) 8%, transparent 12%)
+      \`,
+      backgroundSize: "100% 100%",
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
+  {
+    id: "gradient-polygonal-burst",
+    name: "Polygonal Burst",
+    category: "gradients",
+    badge: "New",
+    description:
+      "Dark background with triangular polygonal gradient burst shapes",
+    style: {
+      background: "#000000",
+      backgroundImage: `
+        conic-gradient(from 0deg at 50% 50%, rgba(168, 85, 247, 0.2) 0deg, transparent 60deg, rgba(59, 130, 246, 0.18) 120deg, transparent 180deg, rgba(236, 72, 153, 0.2) 240deg, transparent 300deg, rgba(16, 185, 129, 0.15) 360deg),
+        conic-gradient(from 30deg at 30% 30%, rgba(99, 102, 241, 0.15) 0deg, transparent 60deg, rgba(139, 92, 246, 0.12) 120deg, transparent 180deg),
+        conic-gradient(from 60deg at 70% 70%, rgba(236, 72, 153, 0.12) 0deg, transparent 60deg, rgba(59, 130, 246, 0.1) 120deg, transparent 180deg)
+      `,
+      backgroundSize: "100% 100%, 80% 80%, 60% 60%",
+      backgroundPosition: "center, 20% 20%, 80% 80%",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-black relative overflow-hidden">
+  {/* Polygonal Burst Gradient */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`
+        conic-gradient(from 0deg at 50% 50%, rgba(168, 85, 247, 0.2) 0deg, transparent 60deg, rgba(59, 130, 246, 0.18) 120deg, transparent 180deg, rgba(236, 72, 153, 0.2) 240deg, transparent 300deg, rgba(16, 185, 129, 0.15) 360deg),
+        conic-gradient(from 30deg at 30% 30%, rgba(99, 102, 241, 0.15) 0deg, transparent 60deg, rgba(139, 92, 246, 0.12) 120deg, transparent 180deg),
+        conic-gradient(from 60deg at 70% 70%, rgba(236, 72, 153, 0.12) 0deg, transparent 60deg, rgba(59, 130, 246, 0.1) 120deg, transparent 180deg)
+      \`,
+      backgroundSize: "100% 100%, 80% 80%, 60% 60%",
+      backgroundPosition: "center, 20% 20%, 80% 80%",
+      backgroundColor: "#000000",
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
+  {
+    id: "gradient-starburst-rays",
+    name: "Starburst Rays",
+    category: "gradients",
+    badge: "New",
+    description:
+      "Dark background with radial ray-like gradient starburst pattern",
+    style: {
+      background: "#000000",
+      backgroundImage: `
+        conic-gradient(from 0deg at 50% 50%, rgba(168, 85, 247, 0.25) 0deg, transparent 15deg, rgba(59, 130, 246, 0.2) 45deg, transparent 60deg, rgba(236, 72, 153, 0.22) 90deg, transparent 105deg, rgba(16, 185, 129, 0.18) 135deg, transparent 150deg, rgba(99, 102, 241, 0.2) 180deg, transparent 195deg, rgba(139, 92, 246, 0.22) 225deg, transparent 240deg, rgba(59, 130, 246, 0.18) 270deg, transparent 285deg, rgba(168, 85, 247, 0.2) 315deg, transparent 330deg, rgba(236, 72, 153, 0.15) 345deg, transparent 360deg),
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.3) 0%, rgba(99, 102, 241, 0.15) 15%, transparent 30%)
+      `,
+      backgroundSize: "100% 100%",
+    },
+    tailwindCode: `<div className="min-h-screen w-full bg-black relative overflow-hidden">
+  {/* Starburst Rays Gradient */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: \`
+        conic-gradient(from 0deg at 50% 50%, rgba(168, 85, 247, 0.25) 0deg, transparent 15deg, rgba(59, 130, 246, 0.2) 45deg, transparent 60deg, rgba(236, 72, 153, 0.22) 90deg, transparent 105deg, rgba(16, 185, 129, 0.18) 135deg, transparent 150deg, rgba(99, 102, 241, 0.2) 180deg, transparent 195deg, rgba(139, 92, 246, 0.22) 225deg, transparent 240deg, rgba(59, 130, 246, 0.18) 270deg, transparent 285deg, rgba(168, 85, 247, 0.2) 315deg, transparent 330deg, rgba(236, 72, 153, 0.15) 345deg, transparent 360deg),
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.3) 0%, rgba(99, 102, 241, 0.15) 15%, transparent 30%)
+      \`,
+      backgroundSize: "100% 100%",
+      backgroundColor: "#000000",
+    }}
+  />
+  {/* Your Content/Components */}
+</div>`,
+  },
 ];
