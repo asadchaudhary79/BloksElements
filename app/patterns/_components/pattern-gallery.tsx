@@ -18,6 +18,15 @@ import { PatternPreview } from "./pattern-preview";
 import { PatternCopyButton } from "./pattern-copy-button";
 import { usePatternBookmarks } from "@/hooks/use-pattern-bookmarks";
 import Link from "next/link";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 interface PatternGalleryProps {
   patterns: Pattern[];
@@ -37,12 +46,19 @@ export function PatternGallery({
   const [query, setQuery] = useState("");
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   const { bookmarkedIds, toggleBookmark, isBookmarked } =
     usePatternBookmarks();
 
   useEffect(() => {
     setSelectedCategory(initialCategory);
   }, [initialCategory]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query, selectedCategory]);
 
   const baseCategories = useMemo(() => {
     const unique = Array.from(
@@ -76,18 +92,66 @@ export function PatternGallery({
     });
   }, [patterns, query, selectedCategory, bookmarkedIds]);
 
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredPatterns.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedPatterns = filteredPatterns.slice(startIndex, endIndex);
+
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    const maxVisible = 5;
+
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push("ellipsis");
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push("ellipsis");
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push("ellipsis");
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push("ellipsis");
+        pages.push(totalPages);
+      }
+    }
+
+    return pages;
+  };
+
   useEffect(() => {
     if (
       previewIndex !== null &&
-      (filteredPatterns.length === 0 || !filteredPatterns[previewIndex])
+      (paginatedPatterns.length === 0 || previewIndex >= paginatedPatterns.length)
     ) {
       setPreviewIndex(null);
       setIsPreviewOpen(false);
     }
-  }, [filteredPatterns, previewIndex]);
+  }, [paginatedPatterns, previewIndex]);
 
-  const previewPattern =
-    previewIndex !== null ? filteredPatterns[previewIndex] : null;
+  // Find the actual index in filteredPatterns for preview
+  const getPreviewPattern = () => {
+    if (previewIndex === null) return null;
+    const actualIndex = startIndex + previewIndex;
+    return filteredPatterns[actualIndex] || null;
+  };
+
+  const previewPattern = getPreviewPattern();
 
   const openPreview = (index: number) => {
     setPreviewIndex(index);
@@ -96,18 +160,34 @@ export function PatternGallery({
 
   const handleNext = () => {
     if (!filteredPatterns.length) return;
-    setPreviewIndex((prev) => {
-      if (prev === null) return 0;
-      return (prev + 1) % filteredPatterns.length;
-    });
+    const currentActualIndex =
+      previewIndex !== null ? startIndex + previewIndex : 0;
+    const nextIndex = (currentActualIndex + 1) % filteredPatterns.length;
+    const nextPage = Math.floor(nextIndex / itemsPerPage) + 1;
+    const nextPageIndex = nextIndex % itemsPerPage;
+
+    if (nextPage !== currentPage) {
+      setCurrentPage(nextPage);
+    }
+    setPreviewIndex(nextPageIndex);
   };
 
   const handlePrev = () => {
     if (!filteredPatterns.length) return;
-    setPreviewIndex((prev) => {
-      if (prev === null) return filteredPatterns.length - 1;
-      return (prev - 1 + filteredPatterns.length) % filteredPatterns.length;
-    });
+    const currentActualIndex =
+      previewIndex !== null
+        ? startIndex + previewIndex
+        : filteredPatterns.length - 1;
+    const prevIndex =
+      (currentActualIndex - 1 + filteredPatterns.length) %
+      filteredPatterns.length;
+    const prevPage = Math.floor(prevIndex / itemsPerPage) + 1;
+    const prevPageIndex = prevIndex % itemsPerPage;
+
+    if (prevPage !== currentPage) {
+      setCurrentPage(prevPage);
+    }
+    setPreviewIndex(prevPageIndex);
   };
 
   return (
@@ -175,17 +255,90 @@ export function PatternGallery({
           </p>
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredPatterns.map((pattern, index) => (
-            <PatternCard
-              key={pattern.id}
-              pattern={pattern}
-              onPreview={() => openPreview(index)}
-              isBookmarked={isBookmarked(pattern.id)}
-              onToggleBookmark={() => toggleBookmark(pattern.id)}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {paginatedPatterns.map((pattern, index) => (
+              <PatternCard
+                key={pattern.id}
+                pattern={pattern}
+                onPreview={() => openPreview(index)}
+                isBookmarked={isBookmarked(pattern.id)}
+                onToggleBookmark={() => toggleBookmark(pattern.id)}
+              />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex flex-col items-center gap-4 pt-6">
+              <div className="text-sm text-muted-foreground">
+                Showing{" "}
+                <span className="font-semibold text-foreground">
+                  {startIndex + 1}-{Math.min(endIndex, filteredPatterns.length)}
+                </span>{" "}
+                of {filteredPatterns.length} patterns
+              </div>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage((prev) => Math.max(1, prev - 1));
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className={cn(
+                        currentPage === 1 && "pointer-events-none opacity-50"
+                      )}
+                    />
+                  </PaginationItem>
+
+                  {getPageNumbers().map((page, index) => {
+                    if (page === "ellipsis") {
+                      return (
+                        <PaginationItem key={`ellipsis-${index}`}>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      );
+                    }
+
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(page as number);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          isActive={currentPage === page}
+                          className="rounded-full border-dotted"
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  })}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className={cn(
+                        currentPage === totalPages &&
+                          "pointer-events-none opacity-50"
+                      )}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
+        </>
       )}
 
       {previewPattern ? (
