@@ -98,18 +98,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={cn(
           fontSans.variable,
           fontMono.variable,
-          "antialiased min-h-screen w-full relative bg-background dark:bg-black"
+          "antialiased min-h-screen w-full relative bg-black"
         )}
         suppressHydrationWarning
       >
-        {/* Emerald Depths Background with Top Glow - Only in Dark Mode */}
+        {/* Emerald Depths Background with Top Glow */}
         <div
-          className="fixed inset-0 z-0 pointer-events-none hidden dark:block"
+          className="fixed inset-0 z-0 pointer-events-none"
           style={{
             background:
               "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(16, 185, 129, 0.25), transparent 70%), #000000",
@@ -118,9 +118,10 @@ export default function RootLayout({
 
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
+          forcedTheme="dark"
           disableTransitionOnChange
-          enableSystem
+          enableSystem={false}
         >
           <div className="relative z-10">
             {children}
