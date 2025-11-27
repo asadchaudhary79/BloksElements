@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["next-mdx-remote"],
+  output: "standalone",
   async redirects() {
     return [
       // Redirect common OG image paths that crawlers might try

@@ -91,6 +91,25 @@ bunx ultracite lint          # Biome lint
 
 ---
 
+## Docker
+
+Run the production image anywhere Docker is available. The multi-stage build uses Bun for dependency installation/builds and a slim Node 20 runtime for execution.
+
+```bash
+# Build the image
+docker build -t emerald-flow .
+
+# Run the container (make sure PORT env matches your hosting needs)
+docker run --rm -p 3000:3000 \
+  -e PORT=3000 \
+  -e NEXT_PUBLIC_SITE_URL=https://localhost:3000 \
+  emerald-flow
+```
+
+If you rely on secrets or API keys, pass them with `--env-file .env.production` (excluded from the image by `.dockerignore`). After the image is up, visit `http://localhost:3000`.
+
+---
+
 ## Contributing
 
 We love contributions! Please read the [contributing guide](./CONTRIBUTING.md) for development setup, scripts, and pull-request workflow.
