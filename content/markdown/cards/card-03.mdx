@@ -1,7 +1,13 @@
 ````tsx
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { TrendingUp, DollarSign, Users, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +62,8 @@ export default function Card03() {
                   <span
                     className={cn(
                       "inline-flex items-center",
-                      stat.trend === "up" && "text-emerald-600 dark:text-emerald-400"
+                      stat.trend === "up" &&
+                        "text-emerald-600 dark:text-emerald-400"
                     )}
                   >
                     {stat.change}
@@ -71,4 +78,3 @@ export default function Card03() {
   );
 }
 ````
-
