@@ -26,6 +26,8 @@ import {
   IconSearch,
   IconX,
   IconLayoutGrid,
+  IconWaveSine,
+  IconPalette,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -124,6 +126,28 @@ const generators = [
     createdAt: "2025-12-25T08:00:00.000Z", // Recent
   },
   {
+    id: "svg-waves",
+    name: "SVG Waves Generator",
+    description:
+      "Generate unique, customizable SVG waves for your website headers and sections. Adjust layers, complexity, and colors.",
+    icon: IconWaveSine,
+    href: "/generators/svg-waves",
+    features: ["Multi-layer", "Random Waves", "SVG Export"],
+    category: "Images",
+    createdAt: "2025-12-25T18:50:00.000Z", // Just added
+  },
+  {
+    id: "mesh-gradient",
+    name: "Mesh Gradient Generator",
+    description:
+      "Create beautiful, fluid mesh gradients with multiple color points. Perfect for futuristic backgrounds and UI elements.",
+    icon: IconPalette,
+    href: "/generators/mesh-gradient",
+    features: ["Multi-point", "Smooth Blending", "CSS Export"],
+    category: "CSS",
+    createdAt: "2025-12-25T18:58:00.000Z", // Newest
+  },
+  {
     id: "css-filters",
     name: "CSS Filters Generator",
     description:
@@ -132,7 +156,7 @@ const generators = [
     href: "/generators/css-filters",
     features: ["All CSS Filters", "Instagram Presets", "Live Preview"],
     category: "Images",
-    createdAt: "2025-12-23T12:00:00.000Z", // Recent
+    createdAt: "2025-12-25T12:00:00.000Z", // Recent
   },
 ];
 
@@ -272,7 +296,7 @@ export default function GeneratorsPage() {
               href={generator.href}
               className="group h-full cursor-pointer"
             >
-              <Card className="h-full bg-white/[0.02] border-white/10 hover:border-emerald-500/40 hover:bg-emerald-500/[0.02] transition-all duration-500 shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2 rounded-[32px] relative overflow-hidden flex flex-col cursor-pointer">
+              <Card className="h-full bg-white/2 border-white/10 hover:border-emerald-500/40 hover:bg-emerald-500/2 transition-all duration-500 shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2 rounded-[32px] relative overflow-hidden flex flex-col cursor-pointer">
                 {isRecentlyAdded && (
                   <div className="absolute top-5 right-5 z-10">
                     <Badge className="bg-emerald-500 hover:bg-emerald-500 text-white border-none text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-emerald-500/40 animate-bounce cursor-pointer">
@@ -330,7 +354,7 @@ export default function GeneratorsPage() {
 
       {/* Empty State */}
       {filteredAndSortedGenerators.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-32 px-10 border-2 border-dashed border-white/10 rounded-[40px] bg-white/[0.02] text-center backdrop-blur-sm">
+        <div className="flex flex-col items-center justify-center py-32 px-10 border-2 border-dashed border-white/10 rounded-[40px] bg-white/2 text-center backdrop-blur-sm">
           <div className="size-20 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6">
             <IconSearch className="w-10 h-10 text-emerald-500 opacity-50" />
           </div>
